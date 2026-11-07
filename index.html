@@ -451,14 +451,24 @@
       sectionSelect.appendChild(option);
     });
 
-    sectionSelect.addEventListener("change", function() {
-      if (this.value) {
-        selectedSection.textContent = "SECTION " + this.value;
-        locationResult.style.display = "block";
-      } else {
-        locationResult.style.display = "none";
-      }
-    });
+    const mapMarker = document.getElementById("mapMarker");
+
+sectionSelect.addEventListener("change", function() {
+  if (this.value) {
+    selectedSection.textContent = "SECTION " + this.value;
+    locationResult.style.display = "block";
+
+    if (this.value === "203") {
+      mapMarker.style.display = "block";
+    } else {
+      mapMarker.style.display = "none";
+    }
+
+  } else {
+    locationResult.style.display = "none";
+    mapMarker.style.display = "none";
+  }
+});
 
     // DESTINATION SELECTOR
     const destinationSelect = document.getElementById("destinationSelect");
