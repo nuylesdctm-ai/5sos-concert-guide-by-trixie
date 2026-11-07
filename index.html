@@ -42,11 +42,57 @@
     .content-section { padding:25px 5px; border-top:1px solid #292943; margin-top:20px; }
     .content-section p { color:#c9c5df; line-height:1.7; font-size:14px; }
     .coming { color:#ff68bd !important; margin-top:12px; font-size:13px !important; }
+
+    .resource-grid { display:grid; gap:12px; margin-top:16px; }
+    .resource-card { display:block; padding:17px; border:1px solid #292943; border-radius:13px; background:#141421; color:#fff; text-decoration:none; transition:.2s; }
+    .resource-card:hover { border-color:#00d9ff; box-shadow:0 0 15px #00d9ff22; }
+    .resource-card .resource-icon { font-size:25px; margin-bottom:9px; }
+    .resource-card strong { display:block; font-size:14px; margin-bottom:6px; }
+    .resource-card small { display:block; color:#aaa6bd; font-size:11px; line-height:1.6; }
+    .resource-card .link-label { display:block; color:#00d9ff; font-size:10px; letter-spacing:1px; margin-top:12px; font-weight:bold; }
+    .info-list { display:grid; gap:12px; margin-top:16px; }
+    .info-item { display:flex; align-items:flex-start; gap:12px; padding:13px; border-radius:11px; background:#141421; border:1px solid #292943; }
+    .info-item .item-icon { font-size:21px; flex:0 0 27px; text-align:center; }
+    .info-item strong { display:block; color:#fff; font-size:13px; margin-bottom:4px; }
+    .info-item small { display:block; color:#aaa6bd; font-size:11px; line-height:1.6; }
+    .notice { margin-top:15px; padding:13px; border:1px solid #55406a; border-radius:11px; background:#21172b; color:#d9d2e8; font-size:11px; line-height:1.7; }
+    .checklist { display:grid; gap:10px; margin-top:16px; }
+    .check-item { display:flex; align-items:center; gap:11px; padding:12px 13px; border-radius:10px; background:#141421; border:1px solid #292943; color:#e8e5f2; font-size:13px; cursor:pointer; }
+    .check-item input { width:18px; height:18px; accent-color:#00d9ff; flex:0 0 18px; }
+    .check-progress { color:#00d9ff; font-size:10px; letter-spacing:1px; margin-top:15px; }
+    .progress-track { height:6px; background:#292943; border-radius:20px; overflow:hidden; margin-top:8px; }
+    .progress-fill { height:100%; width:0; background:#00d9ff; transition:width .2s; }
+    details.fan-card { margin-top:11px; padding:14px; border:1px solid #292943; border-radius:11px; background:#141421; }
+    details.fan-card summary { color:#fff; font-weight:bold; font-size:13px; cursor:pointer; list-style:none; }
+    details.fan-card summary::-webkit-details-marker { display:none; }
+    details.fan-card summary:after { content:"＋"; float:right; color:#c9a5ff; }
+    details.fan-card[open] summary:after { content:"−"; }
+    details.fan-card p { margin-top:10px; font-size:12px; color:#aaa6bd; }
+    .text-link { color:#65dfff; text-decoration:underline; }
+    .fan-roll-card { margin-top:16px; padding:18px; border:1px solid #55406a; border-radius:15px; background:linear-gradient(145deg,#21172f,#141421 68%); }
+    .fan-roll-kicker { color:#ff68bd; font-size:10px; letter-spacing:2px; font-weight:bold; }
+    .fan-roll-title { margin-top:8px; font-size:27px; letter-spacing:1px; }
+    .fan-roll-copy { margin-top:9px; color:#c9c5df; font-size:13px; line-height:1.7; }
+    .fan-roll-rules { display:grid; gap:9px; margin-top:16px; }
+    .fan-roll-rule { display:flex; align-items:flex-start; gap:9px; color:#ddd9ea; font-size:12px; line-height:1.5; }
+    .fan-roll-rule .yes { color:#75e0ad; }
+    .fan-roll-rule .no { color:#ff7777; }
+    .fan-roll-button { display:block; width:100%; margin-top:18px; padding:14px 16px; border:0; border-radius:10px; background:#ff68bd; color:#160b19; font-size:12px; font-weight:bold; letter-spacing:1px; text-align:center; text-decoration:none; cursor:pointer; }
+    .fan-roll-button[aria-disabled="true"] { opacity:.55; cursor:not-allowed; }
+    .fan-roll-status { margin-top:10px; color:#aaa6bd; font-size:10px; line-height:1.6; text-align:center; }
+
+    .home-view { display:block; }
+    .page-view { display:none; }
+    .page-view.active-page { display:block; }
+    .page-back { display:flex; align-items:center; gap:9px; width:100%; margin:0 0 22px; padding:12px 14px; border:1px solid #292943; border-radius:11px; background:#141421; color:#65dfff; font-size:12px; font-weight:bold; letter-spacing:1px; cursor:pointer; text-align:left; }
+    .page-back:active { transform:scale(.99); }
+    .page-kicker { color:#8f8aa8; font-size:10px; letter-spacing:2px; margin-bottom:8px; }
     @media (max-width:380px) { .legend { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
 <main class="container">
+  <div id="homePage" class="home-view">
   <div class="topline">A fan-made concert companion</div>
   <section class="hero">
     <div class="tag">MANILA • 2026</div>
@@ -58,13 +104,17 @@
   <p class="welcome">Hey, 5SOS fam! 💗<br>Welcome to your concert-day companion. Find your way around, check useful information, and make the most of your night with <strong>5 Seconds of Summer!</strong></p>
   <h2 class="section-title">EXPLORE YOUR CONCERT GUIDE</h2>
   <nav class="menu">
-    <a href="#map"><span class="icon">📍</span><span><strong>Venue Map</strong><small>Find your way around the arena</small></span></a>
-    <a href="#essentials"><span class="icon">🎟️</span><span><strong>Concert Essentials</strong><small>Things to know before entering</small></span></a>
-    <a href="#facilities"><span class="icon">🚻</span><span><strong>Arena Facilities</strong><small>Restrooms, exits and other facilities</small></span></a>
-    <a href="#emergency"><span class="icon">🆘</span><span><strong>Emergency Information</strong><small>Important contacts and safety reminders</small></span></a>
+    <a href="#map"><span class="icon">📍</span><span><strong>Venue Map</strong><small>Find your seating section</small></span></a>
+    <a href="#venue-guide"><span class="icon">🏟️</span><span><strong>Venue Guide</strong><small>Official arena resources and facilities</small></span></a>
+    <a href="#venue-rules"><span class="icon">📋</span><span><strong>03. Venue Rules</strong><small>Important entry reminders</small></span></a>
+    <a href="#emergency"><span class="icon">🆘</span><span><strong>04. Emergency Reminders</strong><small>Stay safe and look out for one another</small></span></a>
+    <a href="#essentials"><span class="icon">🎟️</span><span><strong>05. Concert Essentials</strong><small>Your concert-day packing checklist</small></span></a>
+    <a href="#fan-roll"><span class="icon">📸</span><span><strong>The Fan Roll</strong><small>A shared, band-only concert photo album</small></span></a>
+    <a href="#fan-info"><span class="icon">💗</span><span><strong>06. Fan Information</strong><small>Freebie exchange and lost & found reminders</small></span></a>
   </nav>
+  </div>
 
-  <section id="map" class="content-section">
+  <section id="map" class="content-section page-view">
     <h2 class="section-title">📍 VENUE MAP</h2>
     <p>Choose your section to see its ticket category. For sections with split color zones, select your row too.</p>
     <div class="map-card">
@@ -107,27 +157,118 @@
       <p class="hint">Choose your row for Sections 203, 204, 205, 206, 207, 216, 217, 218, 219 and 220. Other sections have one ticket category and do not require a row selection.</p>
     </div>
 
-    <div class="map-card">
-      <label for="destinationSelect" class="field-label" style="color:#ff68bd;">WHERE DO YOU WANT TO GO?</label>
-      <select id="destinationSelect" class="map-select" style="border-color:#ff68bd;">
-        <option value="">Choose your destination</option>
-        <option value="Restroom">🚻 Restroom</option>
-        <option value="Entrance">🚪 Entrance</option>
-        <option value="Exit">🚶 Exit</option>
-        <option value="Elevator">🛗 Elevator</option>
-      </select>
-      <div id="destinationResult" class="destination-result">
-        <p style="color:#ff68bd;font-size:10px;letter-spacing:2px;">DESTINATION SELECTED</p>
-        <h3 id="selectedDestination" style="color:#fff;margin-top:8px;"></h3>
-        <p style="color:#c9c5df;font-size:12px;margin-top:6px;line-height:1.6;">Route information will be added after venue locations are verified.</p>
-      </div>
-    </div>
-    <a href="https://www.sm-arena.com/MOA/" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;text-decoration:none;color:#080810;background:#00d9ff;font-weight:bold;padding:15px;border-radius:12px;margin-top:20px;font-size:13px;letter-spacing:1px;">🌐 EXPLORE THE ARENA IN 360°</a>
+
   </section>
 
-  <section id="essentials" class="content-section"><h2 class="section-title">🎟️ CONCERT ESSENTIALS</h2><p>Your pre-concert checklist, entry reminders, and things to prepare before concert day.</p><p class="coming">Guide coming soon!</p></section>
-  <section id="facilities" class="content-section"><h2 class="section-title">🚻 ARENA FACILITIES</h2><p>Information about restrooms, elevators, exits, and other useful facilities.</p><p class="coming">Guide coming soon!</p></section>
-  <section id="emergency" class="content-section"><h2 class="section-title">🆘 EMERGENCY INFORMATION</h2><p>Important emergency contacts, safety reminders, and assistance information.</p><p class="coming">Information coming soon!</p></section>
+  <section id="venue-guide" class="content-section page-view">
+    <h2 class="section-title">🏟️ VENUE GUIDE</h2>
+    <p>Useful information and official resources from SM Mall of Asia Arena. Open the links below for the latest venue details.</p>
+    <div class="resource-grid">
+      <a class="resource-card" href="https://www.sm-arena.com/MOA/virtual-tour/" target="_blank" rel="noopener noreferrer">
+        <div class="resource-icon">🌐</div>
+        <strong>360° Virtual Tour</strong>
+        <small>Explore the arena virtually and get familiar with the venue before concert day.</small>
+        <span class="link-label">EXPLORE ARENA 360° ↗</span>
+      </a>
+      <a class="resource-card" href="https://www.sm-arena.com/MOA/the-food-alley/" target="_blank" rel="noopener noreferrer">
+        <div class="resource-icon">🍔</div>
+        <strong>The Food Alley</strong>
+        <small>Explore food partners, snacks, and menu information available at the arena.</small>
+        <span class="link-label">EXPLORE FOOD OPTIONS ↗</span>
+      </a>
+      <a class="resource-card" href="https://www.sm-arena.com/MOA/" target="_blank" rel="noopener noreferrer">
+        <div class="resource-icon">📖</div>
+        <strong>Official MOA Arena Website</strong>
+        <small>Visit the official website for general guidelines, advisories, FAQs, and other visitor information.</small>
+        <span class="link-label">VISIT OFFICIAL WEBSITE ↗</span>
+      </a>
+    </div>
+    <h3 class="section-title" style="margin-top:28px;">FACILITIES & ACCESSIBILITY</h3>
+    <div class="info-list">
+      <div class="info-item"><span class="item-icon">🚻</span><span><strong>Comfort Rooms</strong><small>Available on every level, in every corner. PWD and gender-neutral restrooms are also available.</small></span></div>
+      <div class="info-item"><span class="item-icon">🏥</span><span><strong>Main Clinic</strong><small>Located at Coral Way, Level 1.</small></span></div>
+      <div class="info-item"><span class="item-icon">❤️</span><span><strong>Satellite Clinics</strong><small>Available on a per-level basis.</small></span></div>
+    </div>
+    <div class="notice">Facility information above is based on the venue information you provided. Exact facility positions are not marked on our seating map because we do not have a verified public facility floor plan.</div>
+  </section>
+
+  <section id="venue-rules" class="content-section page-view">
+    <p class="section-number">03.</p>
+    <h2 class="section-title">📋 VENUE RULES</h2>
+    <p>Keep these reminders in mind before heading to the arena.</p>
+    <div class="info-list">
+      <div class="info-item"><span class="item-icon">👜</span><span><strong>Maximum bag size</strong><small>12 × 12 inches.</small></span></div>
+      <div class="info-item"><span class="item-icon">🚪</span><span><strong>No re-entry</strong><small>Plan ahead before leaving the venue.</small></span></div>
+      <div class="info-item"><span class="item-icon">🥤</span><span><strong>No outside food and drinks</strong><small>Outside food and beverages are not allowed.</small></span></div>
+      <div class="info-item"><span class="item-icon">📷</span><span><strong>No professional cameras or accessories</strong><small>Professional cameras, tripods, and selfie sticks are not allowed.</small></span></div>
+      <div class="info-item"><span class="item-icon">🚭</span><span><strong>No vaping or smoking inside the event bowl</strong><small>Follow the venue's designated smoking policies and staff instructions.</small></span></div>
+    </div>
+    <div class="notice"><strong>Important:</strong> These are preliminary reminders, not a confirmed event-specific policy for 5SOS Manila on November 29, 2026. Please check the concert organizer's announcement and the arena's latest guidelines before the event. Rules may vary by event.</div>
+  </section>
+
+  <section id="emergency" class="content-section page-view">
+    <p class="section-number">04.</p>
+    <h2 class="section-title">🆘 CONCERT EMERGENCY REMINDERS</h2>
+    <p>Stay calm, stay aware, and look out for the people around you.</p>
+    <div class="info-list">
+      <div class="info-item"><span class="item-icon">👥</span><span><strong>If separated from friends</strong><small>Agree on a meeting point before the concert starts.</small></span></div>
+      <div class="info-item"><span class="item-icon">🩺</span><span><strong>If someone faints</strong><small>Call a marshal or venue staff. Give the person space and don't crowd them.</small></span></div>
+      <div class="info-item"><span class="item-icon">🔋</span><span><strong>Keep your phone charged</strong><small>Save battery for important calls, messages, and emergencies.</small></span></div>
+      <div class="info-item"><span class="item-icon">🚪</span><span><strong>Know your nearest exit</strong><small>Take note of designated exits and follow venue staff instructions.</small></span></div>
+      <div class="info-item"><span class="item-icon">⚠️</span><span><strong>During an evacuation</strong><small>Do not use elevators unless instructed by authorities. Follow official evacuation directions.</small></span></div>
+    </div>
+    <div class="notice">For medical assistance inside the arena, approach venue personnel or the nearest satellite clinic. The main clinic is at Coral Way, Level 1.</div>
+  </section>
+
+  <section id="essentials" class="content-section page-view">
+    <p class="section-number">05.</p>
+    <h2 class="section-title">🎟️ CONCERT ESSENTIALS</h2>
+    <p>Tick off each item as you pack. Your checklist progress updates automatically.</p>
+    <div class="check-progress"><span id="packedCount">0</span> OF 7 ITEMS PACKED</div>
+    <div class="progress-track"><div id="packingProgress" class="progress-fill"></div></div>
+    <div class="checklist">
+      <label class="check-item"><input type="checkbox" class="packing-item"> Ticket and valid ID</label>
+      <label class="check-item"><input type="checkbox" class="packing-item"> Fully charged phone</label>
+      <label class="check-item"><input type="checkbox" class="packing-item"> Power bank</label>
+      <label class="check-item"><input type="checkbox" class="packing-item"> Cash and e-wallet</label>
+      <label class="check-item"><input type="checkbox" class="packing-item"> Earplugs</label>
+      <label class="check-item"><input type="checkbox" class="packing-item"> Small fan</label>
+      <label class="check-item"><input type="checkbox" class="packing-item"> Personal medication</label>
+    </div>
+  </section>
+
+  <section id="fan-roll" class="content-section page-view">
+    <h2 class="section-title">📸 THE FAN ROLL</h2>
+    <div class="fan-roll-card">
+      <p class="fan-roll-kicker">5SOS MANILA · NOVEMBER 29, 2026</p>
+      <h3 class="fan-roll-title">THE FAN ROLL</h3>
+      <p class="fan-roll-copy">One concert, different perspectives. Share your favorite photos of 5SOS from the show and help create a fan-made concert photo roll.</p>
+      <div class="fan-roll-rules">
+        <div class="fan-roll-rule"><span class="yes">✓</span><span>Upload photos where the band is the main subject.</span></div>
+        <div class="fan-roll-rule"><span class="yes">✓</span><span>Live performance shots and band-focused candid moments are welcome.</span></div>
+        <div class="fan-roll-rule"><span class="no">✕</span><span>No selfies, personal portraits, unrelated images, screenshots, or memes.</span></div>
+        <div class="fan-roll-rule"><span class="no">✕</span><span>Please avoid photos that prominently identify other concertgoers without their permission.</span></div>
+      </div>
+      <a id="fanRollUploadButton" class="fan-roll-button" href="#" aria-disabled="true">UPLOAD YOUR BAND PHOTOS</a>
+      <p id="fanRollStatus" class="fan-roll-status">Photo submissions are not open yet. The upload link will appear here once the private album is set up.</p>
+    </div>
+    <div class="notice"><strong>Before uploading:</strong> Submit only photos you took or have permission to share. Uploads will be reviewed before any photos are shown in a public gallery. Please follow the concert's camera and recording policy.</div>
+    <p class="hint">The Fan Roll will use a separate photo-sharing service. Photos are not uploaded to or stored by Concert Compass itself.</p>
+  </section>
+
+  <section id="fan-info" class="content-section page-view">
+    <p class="section-number">06.</p>
+    <h2 class="section-title">💗 FAN INFORMATION</h2>
+    <p>A couple of helpful reminders for sharing the concert experience with fellow fans.</p>
+    <details class="fan-card">
+      <summary>🎁 Freebie Exchange Reminders</summary>
+      <p>Be considerate when giving or receiving freebies. Keep walkways clear, avoid blocking entrances and aisles, and respect anyone who declines a freebie. Please follow venue staff instructions.</p>
+    </details>
+    <details class="fan-card">
+      <summary>🔎 Lost & Found Reminder</summary>
+      <p>If you lose or find an item, approach venue staff or ask for the designated lost-and-found or event assistance point. Do not leave valuables unattended.</p>
+    </details>
+  </section>
   <div class="footer">Made with <span>♥</span> by Trixie<br>Unofficial fan-made guide · Not affiliated with 5SOS or SM MOA Arena</div>
 </main>
 <script>
@@ -333,18 +474,62 @@
 
   rowSelect.addEventListener("change",updateMarker);
 
-  const destinationSelect=document.getElementById("destinationSelect");
-  const destinationResult=document.getElementById("destinationResult");
-  const selectedDestination=document.getElementById("selectedDestination");
+  // FAN ROLL INTEGRATION:
+  // After creating your private, moderated event album, paste its guest upload URL below.
+  // Leave blank until the album is configured and tested.
+  const FAN_ROLL_UPLOAD_URL = "";
+  const fanRollUploadButton = document.getElementById("fanRollUploadButton");
+  const fanRollStatus = document.getElementById("fanRollStatus");
 
-  destinationSelect.addEventListener("change",function(){
-    if(this.value){
-      selectedDestination.textContent=this.options[this.selectedIndex].text;
-      destinationResult.style.display="block";
-    } else {
-      destinationResult.style.display="none";
-    }
+  if (FAN_ROLL_UPLOAD_URL.trim()) {
+    fanRollUploadButton.href = FAN_ROLL_UPLOAD_URL;
+    fanRollUploadButton.target = "_blank";
+    fanRollUploadButton.rel = "noopener noreferrer";
+    fanRollUploadButton.removeAttribute("aria-disabled");
+    fanRollStatus.textContent = "You'll be taken to the private photo submission page. Please follow the upload rules.";
+  } else {
+    fanRollUploadButton.addEventListener("click", function(event) {
+      event.preventDefault();
+    });
+  }
+
+  // SIMPLE PAGE NAVIGATION: each topic opens as its own screen.
+  // The URL hash lets visitors share or bookmark a specific topic.
+  const homePage = document.getElementById("homePage");
+  const topicPages = Array.from(document.querySelectorAll(".page-view"));
+
+  topicPages.forEach(page => {
+    const backButton = document.createElement("button");
+    backButton.type = "button";
+    backButton.className = "page-back";
+    backButton.innerHTML = "<span aria-hidden=\"true\">←</span><span>BACK TO CONCERT GUIDE</span>";
+    backButton.addEventListener("click", () => {
+      history.pushState(null, "", window.location.pathname + window.location.search);
+      renderPage();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    page.insertBefore(backButton, page.firstChild);
   });
+
+  function renderPage() {
+    const requestedId = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    const activePage = topicPages.find(page => page.id === requestedId);
+    if (activePage) {
+      homePage.style.display = "none";
+      topicPages.forEach(page => page.classList.toggle("active-page", page === activePage));
+    } else {
+      homePage.style.display = "block";
+      topicPages.forEach(page => page.classList.remove("active-page"));
+    }
+  }
+
+  window.addEventListener("hashchange", () => {
+    renderPage();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  window.addEventListener("popstate", renderPage);
+  renderPage();
+
 </script>
 </body>
 </html>
