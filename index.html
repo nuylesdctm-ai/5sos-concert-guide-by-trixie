@@ -41,8 +41,12 @@
       padding: 35px 18px;
       border: 1px solid #292943;
       border-radius: 20px;
-      background:
-        radial-gradient(ellipse at top, #252052 0%, #11101e 45%, #090912 100%);
+      background: radial-gradient(
+        ellipse at top,
+        #252052 0%,
+        #11101e 45%,
+        #090912 100%
+      );
       box-shadow: 0 0 35px #17124b66;
     }
 
@@ -152,18 +156,34 @@
       padding: 18px;
     }
 
-    .map-select {
+    .map-select,
+    .map-input {
       width: 100%;
       padding: 14px;
       border-radius: 10px;
       background: #080810;
       color: white;
       font-size: 14px;
+      border: 1px solid #393951;
+      outline: none;
+    }
+
+    .map-select:focus,
+    .map-input:focus {
+      border-color: #00d9ff;
     }
 
     .map-select option {
       background: #141421;
       color: white;
+    }
+
+    .field-label {
+      display: block;
+      color: #c9c5df;
+      font-size: 11px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
     }
 
     .location-result {
@@ -184,26 +204,66 @@
       border: 1px solid #ff68bd;
     }
 
+    /* INTERACTIVE MAP */
+
+    .seating-map {
+      position: relative;
+      width: 100%;
+    }
+
+    .seating-map img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    /* MAP BUBBLE */
+
     .map-marker {
       display: none;
       position: absolute;
-      left: 38%;
-      top: 63%;
-      transform: translate(-50%, -50%);
       z-index: 10;
+      transform: translate(-50%, -100%);
       pointer-events: none;
+      transition: left 0.35s ease, top 0.35s ease;
     }
 
-    .marker-label {
+    .marker-bubble {
+      position: relative;
       background: #00d9ff;
       color: #080810;
+      border: 2px solid white;
+      border-radius: 18px;
+      padding: 9px 13px;
+      min-width: 125px;
+      text-align: center;
+      box-shadow: 0 0 18px #00d9ff99;
+    }
+
+    .marker-bubble::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -11px;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 11px solid #00d9ff;
+    }
+
+    .marker-title {
       font-size: 11px;
       font-weight: bold;
-      padding: 8px 11px;
-      border-radius: 20px;
       white-space: nowrap;
-      box-shadow: 0 0 18px #00d9ff;
-      border: 2px solid white;
+    }
+
+    .marker-details {
+      font-size: 10px;
+      font-weight: bold;
+      margin-top: 4px;
     }
 
     .footer {
@@ -223,9 +283,9 @@
 <body>
 <main class="container">
 
+  <!-- HERO -->
   <div class="topline">A fan-made concert companion</div>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="tag">MANILA • 2026</div>
 
@@ -249,6 +309,7 @@
   <h2 class="section-title">EXPLORE YOUR CONCERT GUIDE</h2>
 
   <nav class="menu">
+
     <a href="#map">
       <span class="icon">📍</span>
       <span>
@@ -280,6 +341,7 @@
         <small>Important contacts and safety reminders</small>
       </span>
     </a>
+
   </nav>
 
   <!-- VENUE MAP -->
@@ -289,76 +351,119 @@
     <h2 class="section-title">📍 VENUE MAP</h2>
 
     <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
-      Find your section and set your starting location.
+      Select your seat details to locate your approximate section.
     </p>
 
-    <!-- INTERACTIVE SEATING PLAN -->
-    <div style="margin-top:20px; background:#141421; border:1px solid #292943; border-radius:15px; padding:12px;">
+    <!-- SEATING PLAN WITH MARKER -->
+    <div class="map-card" style="padding:12px;">
 
-      <div id="seatingMap" style="position:relative; width:100%;">
+      <div class="seating-map" id="seatingMap">
 
         <img
           src="5sos-seating-plan.jpg"
           alt="5SOS Manila 2026 seating plan"
-          style="display:block; width:100%; height:auto; border-radius:8px;"
         >
 
-        <!-- SECTION 203 MARKER -->
         <div id="mapMarker" class="map-marker">
 
-          <div class="marker-label">
-            📍 YOU ARE HERE
+          <div class="marker-bubble">
+
+            <div class="marker-title">
+              📍 YOU ARE HERE
+            </div>
+
+            <div id="markerDetails" class="marker-details">
+              SECTION 203
+            </div>
+
           </div>
 
         </div>
 
       </div>
 
-      <p style="color:#aaa6bd; font-size:10px; text-align:center; margin-top:10px;">
-        Approximate seating location · Not to scale
+      <p style="color:#aaa6bd; font-size:10px; text-align:center; margin-top:12px;">
+        Approximate section location · Seating plan is not to scale
       </p>
 
     </div>
 
-    <!-- STARTING LOCATION -->
+    <!-- SEAT SELECTION -->
     <div class="map-card">
 
-      <label for="sectionSelect"
-        style="display:block; color:#00d9ff; font-size:11px; letter-spacing:2px; margin-bottom:12px;">
+      <h3 style="color:#00d9ff; font-size:11px; letter-spacing:2px; margin-bottom:18px;">
         WHERE ARE YOU SEATED?
-      </label>
+      </h3>
 
-      <select id="sectionSelect" class="map-select"
-        style="border:1px solid #00d9ff;">
+      <div style="margin-bottom:15px;">
 
-        <option value="">Select your section</option>
+        <label class="field-label" for="sectionSelect">
+          SECTION
+        </label>
 
-      </select>
+        <select id="sectionSelect" class="map-select">
+
+          <option value="">Select your section</option>
+
+        </select>
+
+      </div>
+
+      <div style="margin-bottom:15px;">
+
+        <label class="field-label" for="rowInput">
+          ROW
+        </label>
+
+        <input
+          id="rowInput"
+          class="map-input"
+          type="text"
+          maxlength="5"
+          placeholder="Example: C"
+        >
+
+      </div>
+
+      <div style="margin-bottom:5px;">
+
+        <label class="field-label" for="seatInput">
+          SEAT NUMBER(S)
+        </label>
+
+        <input
+          id="seatInput"
+          class="map-input"
+          type="text"
+          maxlength="20"
+          placeholder="Example: 2 and 3"
+        >
+
+      </div>
 
       <div id="locationResult" class="location-result">
 
         <p style="color:#00d9ff; font-size:10px; letter-spacing:2px;">
-          📍 YOU ARE HERE
+          📍 YOUR SEATING DETAILS
         </p>
 
         <h2 id="selectedSection"
-          style="font-size:30px; margin-top:8px; color:white;">
+          style="font-size:27px; margin-top:8px; color:white;">
         </h2>
 
-        <p style="color:#c9c5df; font-size:12px; margin-top:5px;">
-          Your selected starting location
+        <p id="selectedTicketDetails"
+          style="color:#c9c5df; font-size:13px; margin-top:7px;">
         </p>
 
-        <p id="ticketDetails"
-          style="color:#ff68bd; font-size:12px; margin-top:10px; display:none;">
-          VIP A Regular · Row C · Seats 2 and 3
+        <p style="color:#ff68bd; font-size:11px; margin-top:10px;">
+          Approximate section marker only
         </p>
 
       </div>
 
     </div>
 
-    <!-- DESTINATION -->
+    <!-- DESTINATION SELECTOR -->
     <div class="map-card">
 
       <label for="destinationSelect"
@@ -367,7 +472,7 @@
       </label>
 
       <select id="destinationSelect" class="map-select"
-        style="border:1px solid #ff68bd;">
+        style="border-color:#ff68bd;">
 
         <option value="">Choose your destination</option>
         <option value="restroom">🚻 Restroom</option>
@@ -388,7 +493,7 @@
         </h3>
 
         <p style="color:#c9c5df; font-size:12px; margin-top:6px; line-height:1.6;">
-          Route information will be added after venue locations are verified.
+          Verified route information will be added once the venue locations are confirmed.
         </p>
 
       </div>
@@ -464,15 +569,9 @@
 </main>
 
 <script>
-  // STARTING LOCATION SELECTOR
 
-  const sectionSelect = document.getElementById("sectionSelect");
-  const locationResult = document.getElementById("locationResult");
-  const selectedSection = document.getElementById("selectedSection");
-  const mapMarker = document.getElementById("mapMarker");
-  const ticketDetails = document.getElementById("ticketDetails");
+  // SECTION LIST
 
-  // Actual section labels visible in the uploaded seating plan
   const sections = [
     "201", "202", "203", "204", "205", "206", "207",
     "216", "217", "218", "219", "220", "221", "222",
@@ -484,6 +583,8 @@
     "516", "517", "518", "519", "520A", "520B", "521", "522"
   ];
 
+  const sectionSelect = document.getElementById("sectionSelect");
+
   sections.forEach(section => {
     const option = document.createElement("option");
     option.value = section;
@@ -491,30 +592,130 @@
     sectionSelect.appendChild(option);
   });
 
-  sectionSelect.addEventListener("change", function() {
 
-    if (this.value) {
+  // APPROXIMATE SECTION POSITIONS
+  // Percentages refer to the uploaded seating-plan image.
 
-      selectedSection.textContent = "SECTION " + this.value;
-      locationResult.style.display = "block";
+  const sectionPositions = {
 
-      if (this.value === "203") {
-        mapMarker.style.display = "block";
-        ticketDetails.style.display = "block";
-      } else {
-        mapMarker.style.display = "none";
-        ticketDetails.style.display = "none";
-      }
+    "201": [46, 64],
+    "202": [40, 64],
+    "203": [35, 61],
+    "204": [42, 56],
+    "205": [43, 50],
+    "206": [43, 44],
+    "207": [43, 38],
+
+    "216": [65, 38],
+    "217": [65, 44],
+    "218": [65, 50],
+    "219": [65, 56],
+    "220": [65, 61],
+    "221": [60, 64],
+    "222": [53, 64],
+
+    "401": [46, 70],
+    "402": [38, 70],
+    "403A": [33, 66],
+    "403B": [31, 62],
+    "404": [35, 57],
+    "405": [35, 49],
+    "406": [35, 43],
+    "407": [35, 37],
+
+    "416": [80, 37],
+    "417": [80, 43],
+    "418": [80, 49],
+    "419": [80, 56],
+    "420A": [77, 62],
+    "420B": [74, 66],
+    "421": [68, 70],
+    "422": [54, 70],
+
+    "501": [46, 75],
+    "502": [37, 75],
+    "503A": [29, 70],
+    "503B": [24, 63],
+    "504": [24, 55],
+    "505": [24, 48],
+    "506": [24, 42],
+    "507": [24, 36],
+
+    "516": [87, 36],
+    "517": [87, 42],
+    "518": [87, 48],
+    "519": [87, 55],
+    "520A": [85, 63],
+    "520B": [79, 70],
+    "521": [68, 75],
+    "522": [54, 75]
+
+  };
+
+
+  // ELEMENTS
+
+  const rowInput = document.getElementById("rowInput");
+  const seatInput = document.getElementById("seatInput");
+
+  const locationResult = document.getElementById("locationResult");
+  const selectedSection = document.getElementById("selectedSection");
+  const selectedTicketDetails = document.getElementById("selectedTicketDetails");
+
+  const mapMarker = document.getElementById("mapMarker");
+  const markerDetails = document.getElementById("markerDetails");
+
+
+  // UPDATE MAP MARKER AND TICKET DETAILS
+
+  function updateMap() {
+
+    const section = sectionSelect.value;
+    const row = rowInput.value.trim().toUpperCase();
+    const seats = seatInput.value.trim();
+
+    if (!section) {
+      locationResult.style.display = "none";
+      mapMarker.style.display = "none";
+      return;
+    }
+
+    const rowText = row ? "ROW " + row : "ROW NOT ENTERED";
+    const seatText = seats ? "SEATS " + seats : "SEATS NOT ENTERED";
+
+    selectedSection.textContent = "SECTION " + section;
+
+    selectedTicketDetails.textContent =
+      rowText + " · " + seatText;
+
+    locationResult.style.display = "block";
+
+    markerDetails.textContent =
+      "SECTION " + section +
+      (row ? " · ROW " + row : "");
+
+    const position = sectionPositions[section];
+
+    if (position) {
+
+      mapMarker.style.left = position[0] + "%";
+      mapMarker.style.top = position[1] + "%";
+      mapMarker.style.display = "block";
 
     } else {
 
-      locationResult.style.display = "none";
       mapMarker.style.display = "none";
-      ticketDetails.style.display = "none";
 
     }
 
-  });
+  }
+
+
+  // LISTEN FOR USER INPUT
+
+  sectionSelect.addEventListener("change", updateMap);
+  rowInput.addEventListener("input", updateMap);
+  seatInput.addEventListener("input", updateMap);
 
 
   // DESTINATION SELECTOR
