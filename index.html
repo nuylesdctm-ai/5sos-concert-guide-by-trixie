@@ -220,44 +220,96 @@
     </nav>
 
     
+
 <section id="map" style="padding:25px 5px; border-top:1px solid #292943; margin-top:35px;">
 
   <h2 class="section-title">📍 VENUE MAP</h2>
 
   <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
-    Explore the 5SOS Manila 2026 seating layout and find your section.
+    Find your section and set your starting location.
   </p>
 
   <div style="margin-top:20px; background:#141421; border:1px solid #292943; border-radius:15px; padding:12px;">
 
     <img
-      src="5sos-seating-plan.jpg"
+      src="5sos-seating-plan.png"
       alt="5SOS Manila 2026 seating plan"
       style="display:block; width:100%; height:auto; border-radius:8px;"
     >
 
-    <p style="color:#9996ae; font-size:11px; text-align:center; margin-top:10px;">
-      5SOS Manila 2026 · Seating Layout
-    </p>
+  </div>
+
+  <div style="margin-top:22px; background:#141421; border:1px solid #292943; border-radius:15px; padding:18px;">
+
+    <label for="sectionSelect" style="display:block; color:#00d9ff; font-size:11px; letter-spacing:2px; margin-bottom:12px;">
+      WHERE ARE YOU SEATED?
+    </label>
+
+    <select id="sectionSelect"
+      style="width:100%; padding:14px; border-radius:10px; background:#080810; color:white; border:1px solid #00d9ff; font-size:14px;">
+
+      <option value="">Select your section</option>
+
+    </select>
+
+    <div id="locationResult"
+      style="display:none; margin-top:18px; padding:15px; border-radius:10px; background:#102638; border:1px solid #00d9ff;">
+
+      <p style="color:#00d9ff; font-size:10px; letter-spacing:2px;">
+        📍 YOU ARE HERE
+      </p>
+
+      <h2 id="selectedSection"
+        style="font-size:30px; margin-top:8px; color:white;">
+      </h2>
+
+      <p style="color:#c9c5df; font-size:12px; margin-top:5px;">
+        Your selected starting location
+      </p>
+
+    </div>
 
   </div>
 
   <a href="https://www.sm-arena.com/MOA/"
      target="_blank"
      rel="noopener noreferrer"
-     style="display:block; text-align:center; text-decoration:none;
-     color:#080810; background:#00d9ff; font-weight:bold;
-     padding:15px; border-radius:12px; margin-top:20px;
-     font-size:13px; letter-spacing:1px;">
+     style="display:block; text-align:center; text-decoration:none; color:#080810; background:#00d9ff; font-weight:bold; padding:15px; border-radius:12px; margin-top:20px; font-size:13px; letter-spacing:1px;">
 
     🌐 EXPLORE THE ARENA IN 360°
+
   </a>
 
-  <p style="color:#77748b; margin-top:15px; font-size:11px; line-height:1.6;">
-    Seating layout is for reference. Follow the venue's official signs and staff instructions on concert day.
-  </p>
-
 </section>
+
+<script>
+  const sectionSelect = document.getElementById("sectionSelect");
+  const locationResult = document.getElementById("locationResult");
+  const selectedSection = document.getElementById("selectedSection");
+
+  const sections = [
+    ...Array.from({length: 22}, (_, i) => 201 + i),
+    ...Array.from({length: 21}, (_, i) => 401 + i),
+    ...Array.from({length: 21}, (_, i) => 501 + i)
+  ];
+
+  sections.forEach(section => {
+    const option = document.createElement("option");
+    option.value = section;
+    option.textContent = "Section " + section;
+    sectionSelect.appendChild(option);
+  });
+
+  sectionSelect.addEventListener("change", function() {
+    if (this.value) {
+      selectedSection.textContent = "SECTION " + this.value;
+      locationResult.style.display = "block";
+    } else {
+      locationResult.style.display = "none";
+    }
+  });
+</script>
+
 
 
     <section id="essentials" style="padding:25px 5px; border-top:1px solid #292943; margin-top:20px;">
