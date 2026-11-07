@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#080810">
-  <title>5SOS Concert Guide by Trixie</title>
+  <title>5SOS Concert Compass</title>
 
   <style>
     * {
@@ -76,7 +76,6 @@
     }
 
     .date {
-      color: #ffffff;
       font-size: 15px;
       font-weight: bold;
       margin-top: 30px;
@@ -145,18 +144,6 @@
       font-size: 11px;
     }
 
-    .footer {
-      text-align: center;
-      color: #77748b;
-      font-size: 11px;
-      line-height: 1.8;
-      margin-top: 38px;
-    }
-
-    .footer span {
-      color: #ff68bd;
-    }
-
     .map-card {
       margin-top: 20px;
       background: #141421;
@@ -196,296 +183,364 @@
       background: #29182b;
       border: 1px solid #ff68bd;
     }
+
+    .map-marker {
+      display: none;
+      position: absolute;
+      left: 38%;
+      top: 63%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .marker-label {
+      background: #00d9ff;
+      color: #080810;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 8px 11px;
+      border-radius: 20px;
+      white-space: nowrap;
+      box-shadow: 0 0 18px #00d9ff;
+      border: 2px solid white;
+    }
+
+    .footer {
+      text-align: center;
+      color: #77748b;
+      font-size: 11px;
+      line-height: 1.8;
+      margin-top: 38px;
+    }
+
+    .footer span {
+      color: #ff68bd;
+    }
   </style>
 </head>
 
 <body>
-  <main class="container">
+<main class="container">
 
-    <div class="topline">A fan-made concert companion</div>
+  <div class="topline">A fan-made concert companion</div>
 
-    <section class="hero">
-      <div class="tag">MANILA • 2026</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="tag">MANILA • 2026</div>
 
-      <h1>5SOS<br><span>LIVE</span></h1>
+    <h1>5SOS<br><span>LIVE</span></h1>
 
-      <p class="subtitle">CONCERT COMPASS</p>
+    <p class="subtitle">CONCERT COMPASS</p>
 
-      <p class="date">NOVEMBER 29, 2026</p>
-      <p class="venue">SM Mall of Asia Arena · Pasay City</p>
-    </section>
+    <p class="date">NOVEMBER 29, 2026</p>
+    <p class="venue">SM Mall of Asia Arena · Pasay City</p>
+  </section>
 
-    <p class="welcome">
-      Hey, 5SOS fam! 💗<br>
-      Welcome to your concert-day companion.
-      Find your way around, check useful information,
-      and make the most of your night with
-      <strong>5 Seconds of Summer!</strong>
-    </p>
-
-    <h2 class="section-title">EXPLORE YOUR CONCERT GUIDE</h2>
-
-    <nav class="menu">
-      <a href="#map">
-        <span class="icon">📍</span>
-        <span>
-          <strong>Venue Map</strong>
-          <small>Find your way around the arena</small>
-        </span>
-      </a>
-
-      <a href="#essentials">
-        <span class="icon">🎟️</span>
-        <span>
-          <strong>Concert Essentials</strong>
-          <small>Things to know before entering</small>
-        </span>
-      </a>
-
-      <a href="#facilities">
-        <span class="icon">🚻</span>
-        <span>
-          <strong>Arena Facilities</strong>
-          <small>Restrooms, exits and other facilities</small>
-        </span>
-      </a>
-
-      <a href="#emergency">
-        <span class="icon">🆘</span>
-        <span>
-          <strong>Emergency Information</strong>
-          <small>Important contacts and safety reminders</small>
-        </span>
-      </a>
-    </nav>
-
-    <!-- VENUE MAP -->
-    <section id="map" style="padding:25px 5px; border-top:1px solid #292943; margin-top:35px;">
-
-      <h2 class="section-title">📍 VENUE MAP</h2>
-
-      <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
-        Find your section and set your starting location.
-      </p>
-
-      
-<div style="margin-top:20px; background:#141421; border:1px solid #292943; border-radius:15px; padding:12px;">
-
-  <div id="seatingMap" style="position:relative; width:100%;">
-
-    <img
-      src="5sos-seating-plan.jpg"
-      alt="5SOS Manila 2026 seating plan"
-      style="display:block; width:100%; height:auto; border-radius:8px;"
-    >
-
-    <div id="mapMarker"
-      style="display:none; position:absolute; left:34%; top:61.5%; transform:translate(-50%,-50%); z-index:2;">
-
-      <div style="background:#00d9ff; color:#080810; font-size:11px; font-weight:bold; padding:7px 10px; border-radius:20px; white-space:nowrap; box-shadow:0 0 15px #00d9ff;">
-
-        📍 YOU ARE HERE
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <p style="color:#aaa6bd; font-size:10px; text-align:center; margin-top:10px;">
-    Approximate seating location · Not to scale
+  <p class="welcome">
+    Hey, 5SOS fam! 💗<br>
+    Welcome to your concert-day companion.
+    Find your way around, check useful information,
+    and make the most of your night with
+    <strong>5 Seconds of Summer!</strong>
   </p>
 
-</div>
+  <!-- MAIN MENU -->
+  <h2 class="section-title">EXPLORE YOUR CONCERT GUIDE</h2>
 
+  <nav class="menu">
+    <a href="#map">
+      <span class="icon">📍</span>
+      <span>
+        <strong>Venue Map</strong>
+        <small>Find your way around the arena</small>
+      </span>
+    </a>
 
-      <!-- STARTING LOCATION -->
-      <div class="map-card">
+    <a href="#essentials">
+      <span class="icon">🎟️</span>
+      <span>
+        <strong>Concert Essentials</strong>
+        <small>Things to know before entering</small>
+      </span>
+    </a>
 
-        <label for="sectionSelect"
-          style="display:block; color:#00d9ff; font-size:11px; letter-spacing:2px; margin-bottom:12px;">
-          WHERE ARE YOU SEATED?
-        </label>
+    <a href="#facilities">
+      <span class="icon">🚻</span>
+      <span>
+        <strong>Arena Facilities</strong>
+        <small>Restrooms, exits and other facilities</small>
+      </span>
+    </a>
 
-        <select id="sectionSelect" class="map-select"
-          style="border:1px solid #00d9ff;">
+    <a href="#emergency">
+      <span class="icon">🆘</span>
+      <span>
+        <strong>Emergency Information</strong>
+        <small>Important contacts and safety reminders</small>
+      </span>
+    </a>
+  </nav>
 
-          <option value="">Select your section</option>
+  <!-- VENUE MAP -->
+  <section id="map"
+    style="padding:25px 5px; border-top:1px solid #292943; margin-top:35px;">
 
-        </select>
+    <h2 class="section-title">📍 VENUE MAP</h2>
 
-        <div id="locationResult" class="location-result">
+    <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
+      Find your section and set your starting location.
+    </p>
 
-          <p style="color:#00d9ff; font-size:10px; letter-spacing:2px;">
+    <!-- INTERACTIVE SEATING PLAN -->
+    <div style="margin-top:20px; background:#141421; border:1px solid #292943; border-radius:15px; padding:12px;">
+
+      <div id="seatingMap" style="position:relative; width:100%;">
+
+        <img
+          src="5sos-seating-plan.jpg"
+          alt="5SOS Manila 2026 seating plan"
+          style="display:block; width:100%; height:auto; border-radius:8px;"
+        >
+
+        <!-- SECTION 203 MARKER -->
+        <div id="mapMarker" class="map-marker">
+
+          <div class="marker-label">
             📍 YOU ARE HERE
-          </p>
-
-          <h2 id="selectedSection"
-            style="font-size:30px; margin-top:8px; color:white;">
-          </h2>
-
-          <p style="color:#c9c5df; font-size:12px; margin-top:5px;">
-            Your selected starting location
-          </p>
+          </div>
 
         </div>
 
       </div>
 
-      <!-- DESTINATION SELECTOR -->
-      <div class="map-card">
-
-        <label for="destinationSelect"
-          style="display:block; color:#ff68bd; font-size:11px; letter-spacing:2px; margin-bottom:12px;">
-          WHERE DO YOU WANT TO GO?
-        </label>
-
-        <select id="destinationSelect" class="map-select"
-          style="border:1px solid #ff68bd;">
-
-          <option value="">Choose your destination</option>
-          <option value="restroom">🚻 Restroom</option>
-          <option value="entrance">🚪 Entrance</option>
-          <option value="exit">🚶 Exit</option>
-          <option value="elevator">🛗 Elevator</option>
-
-        </select>
-
-        <div id="destinationResult" class="destination-result">
-
-          <p style="color:#ff68bd; font-size:10px; letter-spacing:2px;">
-            DESTINATION SELECTED
-          </p>
-
-          <h3 id="selectedDestination"
-            style="color:white; margin-top:8px;">
-          </h3>
-
-          <p style="color:#c9c5df; font-size:12px; margin-top:6px; line-height:1.6;">
-            Route information will be added after venue locations are verified.
-          </p>
-
-        </div>
-
-      </div>
-
-      <a href="https://www.sm-arena.com/MOA/"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="display:block; text-align:center; text-decoration:none; color:#080810; background:#00d9ff; font-weight:bold; padding:15px; border-radius:12px; margin-top:20px; font-size:13px; letter-spacing:1px;">
-
-        🌐 EXPLORE THE ARENA IN 360°
-
-      </a>
-
-    </section>
-
-    <!-- CONCERT ESSENTIALS -->
-    <section id="essentials" style="padding:25px 5px; border-top:1px solid #292943; margin-top:20px;">
-
-      <h2 class="section-title">🎟️ CONCERT ESSENTIALS</h2>
-
-      <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
-        Your pre-concert checklist, entry reminders, and things to prepare before concert day.
+      <p style="color:#aaa6bd; font-size:10px; text-align:center; margin-top:10px;">
+        Approximate seating location · Not to scale
       </p>
 
-      <p style="color:#ff68bd; margin-top:12px; font-size:13px;">
-        Guide coming soon!
-      </p>
-
-    </section>
-
-    <!-- ARENA FACILITIES -->
-    <section id="facilities" style="padding:25px 5px; border-top:1px solid #292943; margin-top:20px;">
-
-      <h2 class="section-title">🚻 ARENA FACILITIES</h2>
-
-      <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
-        Information about restrooms, elevators, exits, and other useful facilities.
-      </p>
-
-      <p style="color:#ff68bd; margin-top:12px; font-size:13px;">
-        Guide coming soon!
-      </p>
-
-    </section>
-
-    <!-- EMERGENCY INFORMATION -->
-    <section id="emergency" style="padding:25px 5px; border-top:1px solid #292943; margin-top:20px;">
-
-      <h2 class="section-title">🆘 EMERGENCY INFORMATION</h2>
-
-      <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
-        Important emergency contacts, safety reminders, and assistance information.
-      </p>
-
-      <p style="color:#ff68bd; margin-top:12px; font-size:13px;">
-        Information coming soon!
-      </p>
-
-    </section>
-
-    <div class="footer">
-      Made with <span>♥</span> by Trixie<br>
-      Unofficial fan-made guide · Not affiliated with 5SOS or SM MOA Arena
     </div>
 
-  </main>
+    <!-- STARTING LOCATION -->
+    <div class="map-card">
 
-  <script>
-    // STARTING LOCATION SELECTOR
-    const sectionSelect = document.getElementById("sectionSelect");
-    const locationResult = document.getElementById("locationResult");
-    const selectedSection = document.getElementById("selectedSection");
+      <label for="sectionSelect"
+        style="display:block; color:#00d9ff; font-size:11px; letter-spacing:2px; margin-bottom:12px;">
+        WHERE ARE YOU SEATED?
+      </label>
 
-    const sections = [
-      ...Array.from({length: 22}, (_, i) => 201 + i),
-      ...Array.from({length: 21}, (_, i) => 401 + i),
-      ...Array.from({length: 21}, (_, i) => 501 + i)
-    ];
+      <select id="sectionSelect" class="map-select"
+        style="border:1px solid #00d9ff;">
 
-    sections.forEach(section => {
-      const option = document.createElement("option");
-      option.value = section;
-      option.textContent = "Section " + section;
-      sectionSelect.appendChild(option);
-    });
+        <option value="">Select your section</option>
 
-    const mapMarker = document.getElementById("mapMarker");
+      </select>
 
-sectionSelect.addEventListener("change", function() {
-  if (this.value) {
-    selectedSection.textContent = "SECTION " + this.value;
-    locationResult.style.display = "block";
+      <div id="locationResult" class="location-result">
 
-    if (this.value === "203") {
-      mapMarker.style.display = "block";
+        <p style="color:#00d9ff; font-size:10px; letter-spacing:2px;">
+          📍 YOU ARE HERE
+        </p>
+
+        <h2 id="selectedSection"
+          style="font-size:30px; margin-top:8px; color:white;">
+        </h2>
+
+        <p style="color:#c9c5df; font-size:12px; margin-top:5px;">
+          Your selected starting location
+        </p>
+
+        <p id="ticketDetails"
+          style="color:#ff68bd; font-size:12px; margin-top:10px; display:none;">
+          VIP A Regular · Row C · Seats 2 and 3
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- DESTINATION -->
+    <div class="map-card">
+
+      <label for="destinationSelect"
+        style="display:block; color:#ff68bd; font-size:11px; letter-spacing:2px; margin-bottom:12px;">
+        WHERE DO YOU WANT TO GO?
+      </label>
+
+      <select id="destinationSelect" class="map-select"
+        style="border:1px solid #ff68bd;">
+
+        <option value="">Choose your destination</option>
+        <option value="restroom">🚻 Restroom</option>
+        <option value="entrance">🚪 Entrance</option>
+        <option value="exit">🚶 Exit</option>
+        <option value="elevator">🛗 Elevator</option>
+
+      </select>
+
+      <div id="destinationResult" class="destination-result">
+
+        <p style="color:#ff68bd; font-size:10px; letter-spacing:2px;">
+          DESTINATION SELECTED
+        </p>
+
+        <h3 id="selectedDestination"
+          style="color:white; margin-top:8px;">
+        </h3>
+
+        <p style="color:#c9c5df; font-size:12px; margin-top:6px; line-height:1.6;">
+          Route information will be added after venue locations are verified.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- OFFICIAL 360 TOUR -->
+    <a href="https://www.sm-arena.com/MOA/"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="display:block; text-align:center; text-decoration:none; color:#080810; background:#00d9ff; font-weight:bold; padding:15px; border-radius:12px; margin-top:20px; font-size:13px; letter-spacing:1px;">
+
+      🌐 EXPLORE THE ARENA IN 360°
+
+    </a>
+
+  </section>
+
+  <!-- CONCERT ESSENTIALS -->
+  <section id="essentials"
+    style="padding:25px 5px; border-top:1px solid #292943; margin-top:20px;">
+
+    <h2 class="section-title">🎟️ CONCERT ESSENTIALS</h2>
+
+    <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
+      Your pre-concert checklist, entry reminders, and things to prepare before concert day.
+    </p>
+
+    <p style="color:#ff68bd; margin-top:12px; font-size:13px;">
+      Guide coming soon!
+    </p>
+
+  </section>
+
+  <!-- ARENA FACILITIES -->
+  <section id="facilities"
+    style="padding:25px 5px; border-top:1px solid #292943; margin-top:20px;">
+
+    <h2 class="section-title">🚻 ARENA FACILITIES</h2>
+
+    <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
+      Information about restrooms, elevators, exits, and other useful facilities.
+    </p>
+
+    <p style="color:#ff68bd; margin-top:12px; font-size:13px;">
+      Guide coming soon!
+    </p>
+
+  </section>
+
+  <!-- EMERGENCY INFORMATION -->
+  <section id="emergency"
+    style="padding:25px 5px; border-top:1px solid #292943; margin-top:20px;">
+
+    <h2 class="section-title">🆘 EMERGENCY INFORMATION</h2>
+
+    <p style="color:#c9c5df; line-height:1.7; font-size:14px;">
+      Important emergency contacts, safety reminders, and assistance information.
+    </p>
+
+    <p style="color:#ff68bd; margin-top:12px; font-size:13px;">
+      Information coming soon!
+    </p>
+
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Made with <span>♥</span> by Trixie<br>
+    Unofficial fan-made guide · Not affiliated with 5SOS or SM MOA Arena
+  </div>
+
+</main>
+
+<script>
+  // STARTING LOCATION SELECTOR
+
+  const sectionSelect = document.getElementById("sectionSelect");
+  const locationResult = document.getElementById("locationResult");
+  const selectedSection = document.getElementById("selectedSection");
+  const mapMarker = document.getElementById("mapMarker");
+  const ticketDetails = document.getElementById("ticketDetails");
+
+  // Actual section labels visible in the uploaded seating plan
+  const sections = [
+    "201", "202", "203", "204", "205", "206", "207",
+    "216", "217", "218", "219", "220", "221", "222",
+
+    "401", "402", "403A", "403B", "404", "405", "406", "407",
+    "416", "417", "418", "419", "420A", "420B", "421", "422",
+
+    "501", "502", "503A", "503B", "504", "505", "506", "507",
+    "516", "517", "518", "519", "520A", "520B", "521", "522"
+  ];
+
+  sections.forEach(section => {
+    const option = document.createElement("option");
+    option.value = section;
+    option.textContent = "Section " + section;
+    sectionSelect.appendChild(option);
+  });
+
+  sectionSelect.addEventListener("change", function() {
+
+    if (this.value) {
+
+      selectedSection.textContent = "SECTION " + this.value;
+      locationResult.style.display = "block";
+
+      if (this.value === "203") {
+        mapMarker.style.display = "block";
+        ticketDetails.style.display = "block";
+      } else {
+        mapMarker.style.display = "none";
+        ticketDetails.style.display = "none";
+      }
+
     } else {
+
+      locationResult.style.display = "none";
       mapMarker.style.display = "none";
+      ticketDetails.style.display = "none";
+
     }
 
-  } else {
-    locationResult.style.display = "none";
-    mapMarker.style.display = "none";
-  }
-});
+  });
 
-    // DESTINATION SELECTOR
-    const destinationSelect = document.getElementById("destinationSelect");
-    const destinationResult = document.getElementById("destinationResult");
-    const selectedDestination = document.getElementById("selectedDestination");
 
-    destinationSelect.addEventListener("change", function() {
-      if (this.value) {
-        selectedDestination.textContent =
-          this.options[this.selectedIndex].text;
+  // DESTINATION SELECTOR
 
-        destinationResult.style.display = "block";
-      } else {
-        destinationResult.style.display = "none";
-      }
-    });
-  </script>
+  const destinationSelect = document.getElementById("destinationSelect");
+  const destinationResult = document.getElementById("destinationResult");
+  const selectedDestination = document.getElementById("selectedDestination");
+
+  destinationSelect.addEventListener("change", function() {
+
+    if (this.value) {
+
+      selectedDestination.textContent =
+        this.options[this.selectedIndex].text;
+
+      destinationResult.style.display = "block";
+
+    } else {
+
+      destinationResult.style.display = "none";
+
+    }
+
+  });
+
+</script>
 
 </body>
 </html>
