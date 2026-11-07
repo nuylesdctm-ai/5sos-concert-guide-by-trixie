@@ -73,7 +73,6 @@
     <div class="map-card">
       <div id="seatingMap" style="position:relative;width:100%;">
         <img src="ticketmaster-seating-plan.png" alt="Ticketmaster 5SOS Manila seating plan" style="display:block;width:100%;height:auto;border-radius:8px;">
-
         <div id="mapMarker" style="display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);z-index:5;pointer-events:none;">
           <svg width="34" height="44" viewBox="0 0 34 44" aria-label="Your selected seat marker">
             <path d="M17 1C8.2 1 1 8.2 1 17c0 11.2 16 26 16 26s16-14.8 16-26C33 8.2 25.8 1 17 1Z" fill="#00d9ff" stroke="#ffffff" stroke-width="2"/>
@@ -86,8 +85,8 @@
 
       <div class="legend" aria-label="Ticket category legend">
         <div class="legend-item"><span class="swatch" style="background:#367f82"></span>No. 1 Obsession Seat Package</div>
-        <div class="legend-item"><span class="swatch" style="background:#d02bd0"></span>No. 1 Obsession Package</div>
-        <div class="legend-item"><span class="swatch" style="background:#a923b0"></span>SVIP Standing</div>
+        <div class="legend-item"><span class="swatch" style="background:#c933d1"></span>No. 1 Obsession Standing</div>
+        <div class="legend-item"><span class="swatch" style="background:#ab29af"></span>SVIP Standing</div>
         <div class="legend-item"><span class="swatch" style="background:#28bfd3"></span>VIP A Premium</div>
         <div class="legend-item"><span class="swatch" style="background:#f52e68"></span>VIP A Regular</div>
         <div class="legend-item"><span class="swatch" style="background:#7136c9"></span>VIP B Premium</div>
@@ -116,7 +115,7 @@
         <p id="selectedRowsNote" class="hint"></p>
       </div>
 
-      <p class="hint">Choose your row for Sections 203, 204, 205, 207, 216, 218, 219 and 220. Other sections have one ticket category and do not require a row selection.</p>
+      <p class="hint">Choose your row for Sections 203, 204, 205, 206, 207, 216, 217, 218, 219 and 220. Other sections have one ticket category and do not require a row selection.</p>
     </div>
 
     <div class="map-card">
@@ -161,57 +160,29 @@
 </main>
 
 <script>
-  // Approximate marker centers for each section/category on the seating-plan image.
-  // Split 200-level sections have row-specific positions.
+  // Marker positions are based on the centers of the colored blocks
+  // in the supplied seating-plan image. Split sections have row-specific points.
 
   const sectionData = {
-    "201": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[65.0,68.5]},
-    "202": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[56.5,74.5]},
+    "201": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[63.19,68.51]},
+    "202": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[57.04,74.56]},
 
-    "203": {level:200, split:true, pos:{
-      pink:[48.8,76.0],
-      red:[48.8,80.0]
-    }},
-    "204": {level:200, split:true, pos:{
-      pink:[41.0,73.0],
-      red:[40.0,77.0]
-    }},
-    "205": {level:200, split:true, pos:{
-      pink:[34.5,67.0],
-      red:[32.5,72.0]
-    }},
+    "203": {level:200, split:true, pos:{pink:[48.54,72.98],red:[48.90,78.46]}},
+    "204": {level:200, split:true, pos:{pink:[42.91,70.85],red:[40.00,75.96]}},
+    "205": {level:200, split:true, pos:{pink:[36.67,65.29],red:[32.69,69.71]}},
 
-    "206": {level:200, category:"VIP A Premium", color:"#28bfd3", pos:[27.0,62.0]},
+    "206": {level:200, split:true, pos:{cyan:[28.50,58.53],purple:[24.33,62.88]}},
+    "207": {level:200, split:true, pos:{teal:[21.31,50.09],cyan:[19.00,52.59],purple:[16.05,55.83]}},
 
-    "207": {level:200, split:true, pos:{
-      teal:[18.5,52.0],
-      cyan:[24.0,57.0],
-      purple:[18.0,59.0]
-    }},
+    "216": {level:200, split:true, pos:{teal:[45.33,23.71],cyan:[47.65,21.08],purple:[50.55,17.94]}},
+    "217": {level:200, split:true, pos:{cyan:[54.71,29.77],purple:[58.83,24.96]}},
 
-    "216": {level:200, split:true, pos:{
-      teal:[44.5,21.0],
-      cyan:[50.0,27.0],
-      purple:[49.0,17.0]
-    }},
+    "218": {level:200, split:true, pos:{pink:[62.88,36.50],red:[66.89,32.13]}},
+    "219": {level:200, split:true, pos:{pink:[69.46,41.73],red:[74.32,38.36]}},
+    "220": {level:200, split:true, pos:{pink:[72.38,46.95],red:[78.00,46.61]}},
 
-    "217": {level:200, category:"VIP A Premium", color:"#28bfd3", pos:[56.0,30.0]},
-
-    "218": {level:200, split:true, pos:{
-      pink:[63.0,38.0],
-      red:[67.5,33.5]
-    }},
-    "219": {level:200, split:true, pos:{
-      pink:[69.5,43.0],
-      red:[73.0,39.0]
-    }},
-    "220": {level:200, split:true, pos:{
-      pink:[73.0,47.0],
-      red:[76.5,47.0]
-    }},
-
-    "221": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[75.0,58.0]},
-    "222": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[68.0,63.0]},
+    "221": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[74.91,54.88]},
+    "222": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[69.46,61.63]},
 
     "401": {level:400, category:"Box B Premium", color:"#f47743", pos:[68.5,75.0]},
     "402": {level:400, category:"Box B Premium", color:"#f47743", pos:[61.5,81.0]},
@@ -250,6 +221,7 @@
 
   const categoryInfo = {
     teal:{name:"No. 1 Obsession Seat Package",color:"#367f82"},
+    cyanObs:{name:"No. 1 Obsession Seat",color:"#28bfd3"},
     cyan:{name:"VIP A Premium",color:"#28bfd3"},
     pink:{name:"VIP A Regular",color:"#f52e68"},
     purple:{name:"VIP B Premium",color:"#7136c9"},
@@ -266,7 +238,6 @@
   const selectedRowsNote=document.getElementById("selectedRowsNote");
   const rowLetters="ABCDEFGHIJKLMNOP".split("");
 
-  // Populate the section dropdown.
   Object.keys(sectionData).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).forEach(section=>{
     const option=document.createElement("option");
     option.value=section;
@@ -274,15 +245,12 @@
     sectionSelect.appendChild(option);
   });
 
-  // Only sections with multiple colored zones require row selection.
   function updateRowOptions(){
     const section=sectionSelect.value;
-
     rowSelect.innerHTML='<option value="">Select your row</option>';
     rowSelect.value="";
 
     const needsRow=!!section && sectionData[section].split===true;
-
     rowLabel.style.display=needsRow?"block":"none";
     rowSelect.style.display=needsRow?"block":"none";
     rowSelect.disabled=!needsRow;
@@ -300,7 +268,6 @@
   function getSeatCategory(section,row){
     const d=sectionData[section];
 
-    // Sections with only one ticket category.
     if(!d.split){
       return {
         name:d.category,
@@ -313,8 +280,7 @@
     let key,note;
 
     // Sections 203, 204, 205, 218, 219 and 220:
-    // Rows A-G = VIP A Regular (pink)
-    // Rows H-P = VIP B Regular (dark red)
+    // Rows A-G = VIP A Regular; Rows H-P = VIP B Regular.
     if(["203","204","205","218","219","220"].includes(section)){
       if("ABCDEFG".includes(row)){
         key="pink";
@@ -325,10 +291,20 @@
       }
     }
 
+    // Sections 206 and 217:
+    // Rows A-D = No. 1 Obsession Seat; Rows E-P = VIP B Premium.
+    else if(section==="206"||section==="217"){
+      if("ABCD".includes(row)){
+        key="cyanObs";
+        note="Rows A to D · No. 1 Obsession Seat";
+      } else {
+        key="purple";
+        note="Rows E to P · VIP B Premium";
+      }
+    }
+
     // Sections 207 and 216:
-    // Rows A-C = No. 1 Obsession Seat Package (teal)
-    // Rows D-H = VIP A Premium (cyan)
-    // Rows I-P = VIP B Premium (purple)
+    // Rows A-C = No. 1 Obsession Seat Package; D-H = VIP A Premium; I-P = VIP B Premium.
     else if(section==="207"||section==="216"){
       if("ABC".includes(row)){
         key="teal";
@@ -345,7 +321,7 @@
     return {
       name:categoryInfo[key].name,
       color:categoryInfo[key].color,
-      pos:d.pos[key],
+      pos:d.pos[key === "cyanObs" ? "cyan" : key],
       note
     };
   }
@@ -363,7 +339,7 @@
 
     const result=getSeatCategory(section,row);
 
-    // The pin's bottom tip is anchored to the selected map coordinate.
+    // The bottom tip of the marker is anchored to the selected zone center.
     mapMarker.style.left=result.pos[0]+"%";
     mapMarker.style.top=result.pos[1]+"%";
     mapMarker.style.display="block";
@@ -374,7 +350,6 @@
     selectedCategory.textContent=result.name;
     selectedCategory.style.color=result.color;
     selectedRowsNote.textContent=result.note;
-
     locationResult.style.display="block";
   }
 
@@ -385,7 +360,6 @@
 
   rowSelect.addEventListener("change",updateMarker);
 
-  // Destination dropdown.
   const destinationSelect=document.getElementById("destinationSelect");
   const destinationResult=document.getElementById("destinationResult");
   const selectedDestination=document.getElementById("selectedDestination");
