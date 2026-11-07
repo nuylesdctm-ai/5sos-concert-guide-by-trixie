@@ -11,7 +11,7 @@
 
 body {
   background:#080810;
-  color:white;
+  color:#fff;
   font-family:Arial,Helvetica,sans-serif;
   min-height:100vh;
   padding:24px 18px 40px;
@@ -100,7 +100,7 @@ h1 span { color:#00d9ff; }
   align-items:center;
   gap:15px;
   text-decoration:none;
-  color:white;
+  color:#fff;
   background:#141421;
   border:1px solid #292943;
   border-radius:13px;
@@ -145,22 +145,20 @@ h1 span { color:#00d9ff; }
   margin-bottom:12px;
 }
 
-.map-select {
+.map-select, .map-input {
   width:100%;
   padding:14px;
   border-radius:10px;
   background:#080810;
-  color:white;
+  color:#fff;
   font-size:16px;
   border:1px solid #00d9ff;
 }
 
 .map-select option {
   background:#141421;
-  color:white;
+  color:#fff;
 }
-
-.map-select:disabled { opacity:.5; }
 
 .location-result {
   display:none;
@@ -288,7 +286,10 @@ h1 span { color:#00d9ff; }
 
     <h2 class="section-title">📍 VENUE MAP</h2>
 
-    <p>Choose your section to see your approximate seating location and ticket category.</p>
+    <p>
+      Choose your section and row to see your approximate seating location
+      and ticket category.
+    </p>
 
     <div class="map-card">
 
@@ -320,7 +321,7 @@ h1 span { color:#00d9ff; }
         Approximate section marker · Seating plan not drawn to scale
       </p>
 
-      <!-- COLOR LEGEND -->
+      <!-- TICKET COLOR LEGEND -->
       <div class="legend">
 
         <div class="legend-item">
@@ -376,7 +377,7 @@ h1 span { color:#00d9ff; }
       </div>
     </div>
 
-    <!-- SECTION SELECTOR -->
+    <!-- SECTION AND ROW SELECTORS -->
     <div class="map-card">
 
       <label for="sectionSelect" class="field-label">
@@ -387,19 +388,24 @@ h1 span { color:#00d9ff; }
         <option value="">Select your section</option>
       </select>
 
-      <div id="rowContainer" style="display:none;margin-top:22px;">
+      <div style="margin-top:22px;">
 
         <label for="rowSelect" class="field-label">
           WHAT IS YOUR ROW?
         </label>
 
-        <select id="rowSelect" class="map-select">
+        <select id="rowSelect" class="map-select" disabled>
           <option value="">Select your row</option>
         </select>
 
-        <p class="hint">
-          For Sections 207 and 216, the row determines which ticket category applies.
-        </p>
+        <input
+          id="rowInput"
+          class="map-input"
+          type="text"
+          placeholder="Enter your row (e.g. A)"
+          maxlength="3"
+          style="display:none;"
+        >
 
       </div>
 
@@ -410,7 +416,7 @@ h1 span { color:#00d9ff; }
         </p>
 
         <h2 id="selectedSection"
-          style="font-size:25px;margin-top:8px;color:white;">
+          style="font-size:25px;margin-top:8px;color:#fff;">
         </h2>
 
         <p id="selectedCategory"
@@ -420,6 +426,11 @@ h1 span { color:#00d9ff; }
         <p id="selectedRowsNote" class="hint"></p>
 
       </div>
+
+      <p class="hint">
+        Your row is available for every section. For Sections 207 and 216,
+        the row also determines the ticket category.
+      </p>
 
     </div>
 
@@ -492,49 +503,22 @@ h1 span { color:#00d9ff; }
 
 <script>
 
-// SECTION DATA
-// Coordinates are approximate percentages of the seating image.
-// They are fixed per section, not calculated from rows.
+// ======================================
+// SECTION DATA AND APPROXIMATE POSITIONS
+// Coordinates are percentages of the image.
+// ======================================
 
 const sectionData = {
 
-  "201": {
-    category:"VIP A Regular",
-    color:"#f52e68",
-    pos:[64.5,70]
-  },
-
-  "202": {
-    category:"VIP A Regular",
-    color:"#f52e68",
-    pos:[57.5,75]
-  },
-
-  "203": {
-    category:"VIP B Regular",
-    color:"#b51b0b",
-    pos:[48.5,81]
-  },
-
-  "204": {
-    category:"VIP B Regular",
-    color:"#b51b0b",
-    pos:[40,76]
-  },
-
-  "205": {
-    category:"VIP B Regular",
-    color:"#b51b0b",
-    pos:[34,70]
-  },
-
-  "206": {
-    category:"VIP A Premium",
-    color:"#28bfd3",
-    pos:[28,62]
-  },
+  "201": {level:200,category:"VIP A Regular",color:"#f52e68",pos:[64.5,70]},
+  "202": {level:200,category:"VIP A Regular",color:"#f52e68",pos:[57.5,75]},
+  "203": {level:200,category:"VIP B Regular",color:"#b51b0b",pos:[48.5,81]},
+  "204": {level:200,category:"VIP B Regular",color:"#b51b0b",pos:[40,76]},
+  "205": {level:200,category:"VIP B Regular",color:"#b51b0b",pos:[34,70]},
+  "206": {level:200,category:"VIP A Premium",color:"#28bfd3",pos:[28,62]},
 
   "207": {
+    level:200,
     special:true,
     pos:{
       teal:[21,50],
@@ -543,6 +527,7 @@ const sectionData = {
   },
 
   "216": {
+    level:200,
     special:true,
     pos:{
       teal:[46,22],
@@ -550,242 +535,57 @@ const sectionData = {
     }
   },
 
-  "217": {
-    category:"VIP A Premium",
-    color:"#28bfd3",
-    pos:[55,30]
-  },
+  "217": {level:200,category:"VIP A Premium",color:"#28bfd3",pos:[55,30]},
+  "218": {level:200,category:"VIP B Regular",color:"#b51b0b",pos:[64,36]},
+  "219": {level:200,category:"VIP B Regular",color:"#b51b0b",pos:[72,41]},
+  "220": {level:200,category:"VIP B Regular",color:"#b51b0b",pos:[77,49]},
+  "221": {level:200,category:"VIP A Regular",color:"#f52e68",pos:[75,58]},
+  "222": {level:200,category:"VIP A Regular",color:"#f52e68",pos:[68,63]},
 
-  "218": {
-    category:"VIP B Regular",
-    color:"#b51b0b",
-    pos:[64,36]
-  },
+  "401": {level:400,category:"Box B Premium",color:"#f47743",pos:[68,75]},
+  "402": {level:400,category:"Box B Premium",color:"#f47743",pos:[61,81]},
+  "403A": {level:400,category:"Box B Premium",color:"#f47743",pos:[54,87]},
+  "403B": {level:400,category:"Box B Premium",color:"#f47743",pos:[45,88]},
+  "404": {level:400,category:"Box B Premium",color:"#f47743",pos:[37,83]},
+  "405": {level:400,category:"Box B Premium",color:"#f47743",pos:[29,76]},
+  "406": {level:400,category:"Box A Premium",color:"#48d83d",pos:[20,68]},
+  "407": {level:400,category:"Box A Premium",color:"#48d83d",pos:[11,62]},
+  "416": {level:400,category:"Box A Premium",color:"#48d83d",pos:[54,12]},
+  "417": {level:400,category:"Box A Premium",color:"#48d83d",pos:[63,20]},
+  "418": {level:400,category:"Box B Premium",color:"#f47743",pos:[72,27]},
+  "419": {level:400,category:"Box B Premium",color:"#f47743",pos:[79,34]},
+  "420A": {level:400,category:"Box B Premium",color:"#f47743",pos:[85,42]},
+  "420B": {level:400,category:"Box B Premium",color:"#f47743",pos:[85,52]},
+  "421": {level:400,category:"Box B Premium",color:"#f47743",pos:[82,61]},
+  "422": {level:400,category:"Box B Premium",color:"#f47743",pos:[75,68]},
 
-  "219": {
-    category:"VIP B Regular",
-    color:"#b51b0b",
-    pos:[72,41]
-  },
-
-  "220": {
-    category:"VIP B Regular",
-    color:"#b51b0b",
-    pos:[77,49]
-  },
-
-  "221": {
-    category:"VIP A Regular",
-    color:"#f52e68",
-    pos:[75,58]
-  },
-
-  "222": {
-    category:"VIP A Regular",
-    color:"#f52e68",
-    pos:[68,63]
-  },
-
-  "401": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[68,75]
-  },
-
-  "402": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[61,81]
-  },
-
-  "403A": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[54,87]
-  },
-
-  "403B": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[45,88]
-  },
-
-  "404": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[37,83]
-  },
-
-  "405": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[29,76]
-  },
-
-  "406": {
-    category:"Box A Premium",
-    color:"#48d83d",
-    pos:[20,68]
-  },
-
-  "407": {
-    category:"Box A Premium",
-    color:"#48d83d",
-    pos:[11,62]
-  },
-
-  "416": {
-    category:"Box A Premium",
-    color:"#48d83d",
-    pos:[54,12]
-  },
-
-  "417": {
-    category:"Box A Premium",
-    color:"#48d83d",
-    pos:[63,20]
-  },
-
-  "418": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[72,27]
-  },
-
-  "419": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[79,34]
-  },
-
-  "420A": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[85,42]
-  },
-
-  "420B": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[85,52]
-  },
-
-  "421": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[82,61]
-  },
-
-  "422": {
-    category:"Box B Premium",
-    color:"#f47743",
-    pos:[75,68]
-  },
-
-  "501": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[73,78]
-  },
-
-  "502": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[65,86]
-  },
-
-  "503A": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[55,94]
-  },
-
-  "503B": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[44,94]
-  },
-
-  "504": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[33,89]
-  },
-
-  "505": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[23,82]
-  },
-
-  "506": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[16,74]
-  },
-
-  "507": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[8,67]
-  },
-
-  "516": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[58,7]
-  },
-
-  "517": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[68,15]
-  },
-
-  "518": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[76,22]
-  },
-
-  "519": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[85,31]
-  },
-
-  "520A": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[92,42]
-  },
-
-  "520B": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[92,52]
-  },
-
-  "521": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[89,64]
-  },
-
-  "522": {
-    category:"Box Regular",
-    color:"#e6f34b",
-    pos:[81,72]
-  }
+  "501": {level:500,category:"Box Regular",color:"#e6f34b",pos:[73,78]},
+  "502": {level:500,category:"Box Regular",color:"#e6f34b",pos:[65,86]},
+  "503A": {level:500,category:"Box Regular",color:"#e6f34b",pos:[55,94]},
+  "503B": {level:500,category:"Box Regular",color:"#e6f34b",pos:[44,94]},
+  "504": {level:500,category:"Box Regular",color:"#e6f34b",pos:[33,89]},
+  "505": {level:500,category:"Box Regular",color:"#e6f34b",pos:[23,82]},
+  "506": {level:500,category:"Box Regular",color:"#e6f34b",pos:[16,74]},
+  "507": {level:500,category:"Box Regular",color:"#e6f34b",pos:[8,67]},
+  "516": {level:500,category:"Box Regular",color:"#e6f34b",pos:[58,7]},
+  "517": {level:500,category:"Box Regular",color:"#e6f34b",pos:[68,15]},
+  "518": {level:500,category:"Box Regular",color:"#e6f34b",pos:[76,22]},
+  "519": {level:500,category:"Box Regular",color:"#e6f34b",pos:[85,31]},
+  "520A": {level:500,category:"Box Regular",color:"#e6f34b",pos:[92,42]},
+  "520B": {level:500,category:"Box Regular",color:"#e6f34b",pos:[92,52]},
+  "521": {level:500,category:"Box Regular",color:"#e6f34b",pos:[89,64]},
+  "522": {level:500,category:"Box Regular",color:"#e6f34b",pos:[81,72]}
 
 };
 
 
-// SELECTOR ELEMENTS
+// ======================================
+// ELEMENTS
+// ======================================
 
 const sectionSelect = document.getElementById("sectionSelect");
 const rowSelect = document.getElementById("rowSelect");
-const rowContainer = document.getElementById("rowContainer");
+const rowInput = document.getElementById("rowInput");
 
 const mapMarker = document.getElementById("mapMarker");
 const locationResult = document.getElementById("locationResult");
@@ -795,7 +595,9 @@ const selectedCategory = document.getElementById("selectedCategory");
 const selectedRowsNote = document.getElementById("selectedRowsNote");
 
 
-// POPULATE SECTIONS
+// ======================================
+// POPULATE SECTION DROPDOWN
+// ======================================
 
 Object.keys(sectionData)
   .sort((a,b) => a.localeCompare(b,undefined,{numeric:true}))
@@ -810,51 +612,29 @@ Object.keys(sectionData)
   });
 
 
-// CATEGORY FOR THE TWO SECTIONS WITH FRONT/BACK SPLIT
+// ======================================
+// SET ROW FIELD BASED ON LEVEL
+// ======================================
 
-function getSpecialCategory(section,row) {
+function setupRowField(section) {
 
-  if ("ABCD".includes(row)) {
+  rowSelect.style.display = "none";
+  rowInput.style.display = "none";
 
-    return {
-      name:"No. 1 Obsession Seat Package",
-      color:"#367f82",
-      pos:sectionData[section].pos.teal,
-      note:"Front rows A to D · No. 1 Obsession Seat Package"
-    };
+  rowSelect.disabled = true;
+  rowSelect.innerHTML = '<option value="">Select your row</option>';
 
-  }
-
-  return {
-    name:"VIP B Premium",
-    color:"#7136c9",
-    pos:sectionData[section].pos.purple,
-    note:"Back rows E to P · VIP B Premium"
-  };
-
-}
-
-
-// UPDATE SELECTOR
-
-function updateSection() {
-
-  const section = sectionSelect.value;
-
-  rowContainer.style.display = "none";
-  locationResult.style.display = "none";
-  mapMarker.style.display = "none";
+  rowInput.value = "";
 
   if (!section) return;
 
-  const data = sectionData[section];
+  const level = sectionData[section].level;
 
-  // Only sections 207 and 216 need row selection
-  if (data.special) {
+  // 200 LEVEL: ROWS A TO P
 
-    rowContainer.style.display = "block";
+  if (level === 200) {
 
-    rowSelect.innerHTML = '<option value="">Select your row</option>';
+    rowSelect.style.display = "block";
 
     "ABCDEFGHIJKLMNOP".split("").forEach(row => {
 
@@ -866,55 +646,93 @@ function updateSection() {
 
     });
 
-    return;
+    rowSelect.disabled = false;
 
   }
 
-  // All other sections use one category regardless of row
+  // 500 LEVEL: ROWS A TO J
 
-  showSeat(
-    section,
-    data.category,
-    data.color,
-    data.pos,
-    "All rows · " + data.category,
-    ""
-  );
+  else if (level === 500) {
+
+    rowSelect.style.display = "block";
+
+    "ABCDEFGHIJ".split("").forEach(row => {
+
+      const option = document.createElement("option");
+      option.value = row;
+      option.textContent = "Row " + row;
+
+      rowSelect.appendChild(option);
+
+    });
+
+    rowSelect.disabled = false;
+
+  }
+
+  // 400 LEVEL: MANUAL ROW ENTRY
+  // Exact row range was not provided.
+
+  else if (level === 400) {
+
+    rowInput.style.display = "block";
+
+  }
 
 }
 
 
+// ======================================
+// DETERMINE SELECTED CATEGORY
+// ======================================
+
+function getSeatCategory(section,row) {
+
+  const data = sectionData[section];
+
+  // Special front/back split for 207 and 216
+
+  if (data.special) {
+
+    if ("ABCD".includes(row)) {
+
+      return {
+        name:"No. 1 Obsession Seat Package",
+        color:"#367f82",
+        pos:data.pos.teal,
+        note:"Rows A to D · No. 1 Obsession Seat Package"
+      };
+
+    }
+
+    return {
+      name:"VIP B Premium",
+      color:"#7136c9",
+      pos:data.pos.purple,
+      note:"Rows E to P · VIP B Premium"
+    };
+
+  }
+
+  return {
+    name:data.category,
+    color:data.color,
+    pos:data.pos,
+    note:"Category applies to all rows in this section."
+  };
+
+}
+
+
+// ======================================
 // DISPLAY SELECTED SEAT
+// ======================================
 
-function showSeat(section,category,color,pos,note,row) {
-
-  mapMarker.style.left = pos[0] + "%";
-  mapMarker.style.top = pos[1] + "%";
-  mapMarker.style.display = "block";
-
-  mapMarker.querySelector("svg path").setAttribute("fill",color);
-
-  selectedSection.textContent =
-    "SECTION " + section + (row ? " · ROW " + row : "");
-
-  selectedCategory.textContent = category;
-  selectedCategory.style.color = color;
-
-  selectedRowsNote.textContent = note;
-
-  locationResult.style.display = "block";
-
-}
-
-
-// ROW CHANGE FOR 207 AND 216
-
-function updateRow() {
+function showSelectedSeat() {
 
   const section = sectionSelect.value;
-  const row = rowSelect.value;
 
-  if (!section || !row) {
+  if (!section) {
 
     mapMarker.style.display = "none";
     locationResult.style.display = "none";
@@ -923,25 +741,68 @@ function updateRow() {
 
   }
 
-  const result = getSpecialCategory(section,row);
+  const level = sectionData[section].level;
 
-  showSeat(
-    section,
-    result.name,
-    result.color,
-    result.pos,
-    result.note,
-    row
-  );
+  let row = "";
+
+  if (level === 400) {
+    row = rowInput.value.trim().toUpperCase();
+  } else {
+    row = rowSelect.value;
+  }
+
+  if (!row) {
+
+    mapMarker.style.display = "none";
+    locationResult.style.display = "none";
+
+    return;
+
+  }
+
+  const result = getSeatCategory(section,row);
+
+  if (!result) return;
+
+  mapMarker.style.left = result.pos[0] + "%";
+  mapMarker.style.top = result.pos[1] + "%";
+  mapMarker.style.display = "block";
+
+  mapMarker.querySelector("svg path").setAttribute("fill",result.color);
+
+  selectedSection.textContent =
+    "SECTION " + section + " · ROW " + row;
+
+  selectedCategory.textContent = result.name;
+  selectedCategory.style.color = result.color;
+
+  selectedRowsNote.textContent = result.note;
+
+  locationResult.style.display = "block";
 
 }
 
 
-sectionSelect.addEventListener("change",updateSection);
-rowSelect.addEventListener("change",updateRow);
+// ======================================
+// EVENT LISTENERS
+// ======================================
+
+sectionSelect.addEventListener("change",function() {
+
+  setupRowField(this.value);
+
+  mapMarker.style.display = "none";
+  locationResult.style.display = "none";
+
+});
+
+rowSelect.addEventListener("change",showSelectedSeat);
+rowInput.addEventListener("input",showSelectedSeat);
 
 
+// ======================================
 // DESTINATION SELECTOR
+// ======================================
 
 const destinationSelect = document.getElementById("destinationSelect");
 const destinationResult = document.getElementById("destinationResult");
