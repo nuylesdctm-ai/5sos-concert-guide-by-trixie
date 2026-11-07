@@ -55,9 +55,7 @@
     <p class="date">NOVEMBER 29, 2026</p>
     <p class="venue">SM Mall of Asia Arena · Pasay City</p>
   </section>
-
   <p class="welcome">Hey, 5SOS fam! 💗<br>Welcome to your concert-day companion. Find your way around, check useful information, and make the most of your night with <strong>5 Seconds of Summer!</strong></p>
-
   <h2 class="section-title">EXPLORE YOUR CONCERT GUIDE</h2>
   <nav class="menu">
     <a href="#map"><span class="icon">📍</span><span><strong>Venue Map</strong><small>Find your way around the arena</small></span></a>
@@ -69,20 +67,14 @@
   <section id="map" class="content-section">
     <h2 class="section-title">📍 VENUE MAP</h2>
     <p>Choose your section to see its ticket category. For sections with split color zones, select your row too.</p>
-
     <div class="map-card">
       <div id="seatingMap" style="position:relative;width:100%;">
         <img src="ticketmaster-seating-plan.png" alt="Ticketmaster 5SOS Manila seating plan" style="display:block;width:100%;height:auto;border-radius:8px;">
         <div id="mapMarker" style="display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);z-index:5;pointer-events:none;">
-          <svg width="34" height="44" viewBox="0 0 34 44" aria-label="Your selected seat marker">
-            <path d="M17 1C8.2 1 1 8.2 1 17c0 11.2 16 26 16 26s16-14.8 16-26C33 8.2 25.8 1 17 1Z" fill="#00d9ff" stroke="#ffffff" stroke-width="2"/>
-            <circle cx="17" cy="17" r="6" fill="#080810"/>
-          </svg>
+          <svg width="34" height="44" viewBox="0 0 34 44" aria-label="Your selected seat marker"><path d="M17 1C8.2 1 1 8.2 1 17c0 11.2 16 26 16 26s16-14.8 16-26C33 8.2 25.8 1 17 1Z" fill="#00d9ff" stroke="#ffffff" stroke-width="2"/><circle cx="17" cy="17" r="6" fill="#080810"/></svg>
         </div>
       </div>
-
       <p class="hint" style="text-align:center;">Approximate section marker · Seating plan not drawn to scale</p>
-
       <div class="legend" aria-label="Ticket category legend">
         <div class="legend-item"><span class="swatch" style="background:#367f82"></span>No. 1 Obsession Seat Package</div>
         <div class="legend-item"><span class="swatch" style="background:#c933d1"></span>No. 1 Obsession Standing</div>
@@ -102,19 +94,16 @@
       <select id="sectionSelect" class="map-select">
         <option value="">Select your section</option>
       </select>
-
       <label id="rowLabel" for="rowSelect" class="field-label" style="display:none;margin-top:22px;">WHAT IS YOUR ROW?</label>
       <select id="rowSelect" class="map-select" style="display:none;" disabled>
         <option value="">Select your row</option>
       </select>
-
       <div id="locationResult" class="location-result">
         <p style="color:#00d9ff;font-size:10px;letter-spacing:2px;">📍 YOUR SELECTED SEAT</p>
         <h2 id="selectedSection" style="font-size:25px;margin-top:8px;color:#fff;"></h2>
         <p id="selectedCategory" style="color:#fff;font-size:14px;margin-top:8px;font-weight:bold;"></p>
         <p id="selectedRowsNote" class="hint"></p>
       </div>
-
       <p class="hint">Choose your row for Sections 203, 204, 205, 206, 207, 216, 217, 218, 219 and 220. Other sections have one ticket category and do not require a row selection.</p>
     </div>
 
@@ -127,42 +116,23 @@
         <option value="Exit">🚶 Exit</option>
         <option value="Elevator">🛗 Elevator</option>
       </select>
-
       <div id="destinationResult" class="destination-result">
         <p style="color:#ff68bd;font-size:10px;letter-spacing:2px;">DESTINATION SELECTED</p>
         <h3 id="selectedDestination" style="color:#fff;margin-top:8px;"></h3>
         <p style="color:#c9c5df;font-size:12px;margin-top:6px;line-height:1.6;">Route information will be added after venue locations are verified.</p>
       </div>
     </div>
-
     <a href="https://www.sm-arena.com/MOA/" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;text-decoration:none;color:#080810;background:#00d9ff;font-weight:bold;padding:15px;border-radius:12px;margin-top:20px;font-size:13px;letter-spacing:1px;">🌐 EXPLORE THE ARENA IN 360°</a>
   </section>
 
-  <section id="essentials" class="content-section">
-    <h2 class="section-title">🎟️ CONCERT ESSENTIALS</h2>
-    <p>Your pre-concert checklist, entry reminders, and things to prepare before concert day.</p>
-    <p class="coming">Guide coming soon!</p>
-  </section>
-
-  <section id="facilities" class="content-section">
-    <h2 class="section-title">🚻 ARENA FACILITIES</h2>
-    <p>Information about restrooms, elevators, exits, and other useful facilities.</p>
-    <p class="coming">Guide coming soon!</p>
-  </section>
-
-  <section id="emergency" class="content-section">
-    <h2 class="section-title">🆘 EMERGENCY INFORMATION</h2>
-    <p>Important emergency contacts, safety reminders, and assistance information.</p>
-    <p class="coming">Information coming soon!</p>
-  </section>
-
+  <section id="essentials" class="content-section"><h2 class="section-title">🎟️ CONCERT ESSENTIALS</h2><p>Your pre-concert checklist, entry reminders, and things to prepare before concert day.</p><p class="coming">Guide coming soon!</p></section>
+  <section id="facilities" class="content-section"><h2 class="section-title">🚻 ARENA FACILITIES</h2><p>Information about restrooms, elevators, exits, and other useful facilities.</p><p class="coming">Guide coming soon!</p></section>
+  <section id="emergency" class="content-section"><h2 class="section-title">🆘 EMERGENCY INFORMATION</h2><p>Important emergency contacts, safety reminders, and assistance information.</p><p class="coming">Information coming soon!</p></section>
   <div class="footer">Made with <span>♥</span> by Trixie<br>Unofficial fan-made guide · Not affiliated with 5SOS or SM MOA Arena</div>
 </main>
-
 <script>
-  // Marker positions are based on the centers of the colored blocks
-  // in the supplied seating-plan image. Split sections have row-specific points.
-
+  // Marker positions are approximate centers of the matching colored blocks
+  // on ticketmaster-seating-plan.png. Split 200-level sections have row-specific points.
   const sectionData = {
     "201": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[63.19,68.51]},
     "202": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[57.04,74.56]},
@@ -180,6 +150,9 @@
     "218": {level:200, split:true, pos:{pink:[62.88,36.50],red:[66.89,32.13]}},
     "219": {level:200, split:true, pos:{pink:[69.46,41.73],red:[74.32,38.36]}},
     "220": {level:200, split:true, pos:{pink:[72.38,46.95],red:[78.00,46.61]}},
+
+    "NO1STANDING": {level:"floor", displayName:"No. 1 Obsession Standing", category:"No. 1 Obsession Standing", color:"#c933d1", pos:[34.5,43.5]},
+    "SVIPSTANDING": {level:"floor", displayName:"SVIP Standing", category:"SVIP Standing", color:"#ab29af", pos:[49.0,52.0]},
 
     "221": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[74.91,54.88]},
     "222": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[69.46,61.63]},
@@ -241,7 +214,7 @@
   Object.keys(sectionData).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).forEach(section=>{
     const option=document.createElement("option");
     option.value=section;
-    option.textContent="Section "+section;
+    option.textContent=sectionData[section].displayName || "Section "+section;
     sectionSelect.appendChild(option);
   });
 
@@ -339,17 +312,17 @@
 
     const result=getSeatCategory(section,row);
 
-    // The bottom tip of the marker is anchored to the selected zone center.
     mapMarker.style.left=result.pos[0]+"%";
     mapMarker.style.top=result.pos[1]+"%";
     mapMarker.style.display="block";
 
     mapMarker.querySelector("svg path").setAttribute("fill",result.color);
 
-    selectedSection.textContent="SECTION "+section+(row==="ALL"?"":" · ROW "+row);
+    selectedSection.textContent=(d.displayName || "SECTION "+section)+(row==="ALL"?"":" · ROW "+row);
     selectedCategory.textContent=result.name;
     selectedCategory.style.color=result.color;
     selectedRowsNote.textContent=result.note;
+
     locationResult.style.display="block";
   }
 
