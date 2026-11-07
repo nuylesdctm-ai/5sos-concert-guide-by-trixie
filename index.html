@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080810">
+  <title>5SOS Concert Guide by Trixie</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background:#080810; color:#fff; font-family:Arial,Helvetica,sans-serif; min-height:100vh; padding:24px 18px 40px; }
+    .container { max-width:520px; margin:auto; }
+    .topline { color:#00d9ff; font-size:11px; letter-spacing:4px; text-transform:uppercase; text-align:center; margin:18px 0 38px; }
+    .hero { text-align:center; padding:35px 18px; border:1px solid #292943; border-radius:20px; background:radial-gradient(ellipse at top,#252052 0%,#11101e 45%,#090912 100%); box-shadow:0 0 35px #17124b66; }
+    .tag { display:inline-block; color:#ff68bd; border:1px solid #ff68bd; border-radius:30px; padding:7px 13px; font-size:10px; letter-spacing:2px; margin-bottom:24px; }
+    h1 { font-size:clamp(40px,12vw,65px); line-height:.95; letter-spacing:-3px; text-shadow:0 0 22px #00cfff77; }
+    h1 span { color:#00d9ff; }
+    .subtitle { color:#c9c5df; font-size:14px; letter-spacing:3px; margin-top:15px; }
+    .date { color:#fff; font-size:15px; font-weight:bold; margin-top:30px; }
+    .venue { color:#aaa6bd; font-size:13px; margin-top:8px; }
+    .welcome { color:#d4d0e3; text-align:center; font-size:14px; line-height:1.7; margin:30px 8px; }
+    .welcome strong { color:#ff68bd; }
+    .section-title { font-size:11px; letter-spacing:3px; color:#00d9ff; margin:30px 0 15px; }
+    .menu { display:grid; gap:12px; }
+    .menu a { display:flex; align-items:center; gap:15px; text-decoration:none; color:#fff; background:#141421; border:1px solid #292943; border-radius:13px; padding:17px; transition:.2s; }
+    .menu a:hover { border-color:#00d9ff; box-shadow:0 0 15px #00d9ff33; }
+    .menu .icon { font-size:25px; }
+    .menu strong { display:block; font-size:14px; margin-bottom:5px; }
+    .menu small { color:#9996ae; font-size:11px; }
+    .footer { text-align:center; color:#77748b; font-size:11px; line-height:1.8; margin-top:38px; }
+    .footer span { color:#ff68bd; }
+    .map-card { margin-top:20px; background:#141421; border:1px solid #292943; border-radius:15px; padding:18px; }
+    .map-select { width:100%; padding:14px; border-radius:10px; background:#080810; color:#fff; font-size:16px; border:1px solid #00d9ff; }
+    .map-select option { background:#141421; color:#fff; }
+    .field-label { display:block; color:#00d9ff; font-size:11px; letter-spacing:2px; margin-bottom:12px; }
+    .location-result { display:none; margin-top:18px; padding:15px; border-radius:10px; background:#102638; border:1px solid #00d9ff; }
+    .legend { display:grid; grid-template-columns:1fr 1fr; gap:10px 8px; margin-top:18px; }
+    .legend-item { display:flex; align-items:center; gap:8px; color:#d9d6e8; font-size:10px; line-height:1.3; }
+    .swatch { width:17px; height:17px; border-radius:3px; flex:0 0 17px; }
+    .hint { color:#aaa6bd; font-size:11px; line-height:1.6; margin-top:10px; }
+    .destination-result { display:none; margin-top:15px; padding:14px; border-radius:10px; background:#29182b; border:1px solid #ff68bd; }
+    .content-section { padding:25px 5px; border-top:1px solid #292943; margin-top:20px; }
+    .content-section p { color:#c9c5df; line-height:1.7; font-size:14px; }
+    .coming { color:#ff68bd !important; margin-top:12px; font-size:13px !important; }
+    @media (max-width:380px) { .legend { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<main class="container">
+  <div class="topline">A fan-made concert companion</div>
+  <section class="hero">
+    <div class="tag">MANILA • 2026</div>
+    <h1>5SOS<br><span>LIVE</span></h1>
+    <p class="subtitle">CONCERT COMPASS</p>
+    <p class="date">NOVEMBER 29, 2026</p>
+    <p class="venue">SM Mall of Asia Arena · Pasay City</p>
+  </section>
+
+  <p class="welcome">Hey, 5SOS fam! 💗<br>Welcome to your concert-day companion. Find your way around, check useful information, and make the most of your night with <strong>5 Seconds of Summer!</strong></p>
+
+  <h2 class="section-title">EXPLORE YOUR CONCERT GUIDE</h2>
+  <nav class="menu">
+    <a href="#map"><span class="icon">📍</span><span><strong>Venue Map</strong><small>Find your way around the arena</small></span></a>
+    <a href="#essentials"><span class="icon">🎟️</span><span><strong>Concert Essentials</strong><small>Things to know before entering</small></span></a>
+    <a href="#facilities"><span class="icon">🚻</span><span><strong>Arena Facilities</strong><small>Restrooms, exits and other facilities</small></span></a>
+    <a href="#emergency"><span class="icon">🆘</span><span><strong>Emergency Information</strong><small>Important contacts and safety reminders</small></span></a>
+  </nav>
+
+  <section id="map" class="content-section">
+    <h2 class="section-title">📍 VENUE MAP</h2>
+    <p>Choose your section to see its ticket category. For sections with split color zones, select your row too.</p>
+
+    <div class="map-card">
+      <div id="seatingMap" style="position:relative;width:100%;">
+        <img src="ticketmaster-seating-plan.png" alt="Ticketmaster 5SOS Manila seating plan" style="display:block;width:100%;height:auto;border-radius:8px;">
+
+        <div id="mapMarker" style="display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);z-index:5;pointer-events:none;">
+          <svg width="34" height="44" viewBox="0 0 34 44" aria-label="Your selected seat marker">
+            <path d="M17 1C8.2 1 1 8.2 1 17c0 11.2 16 26 16 26s16-14.8 16-26C33 8.2 25.8 1 17 1Z" fill="#00d9ff" stroke="#ffffff" stroke-width="2"/>
+            <circle cx="17" cy="17" r="6" fill="#080810"/>
+          </svg>
+        </div>
+      </div>
+
+      <p class="hint" style="text-align:center;">Approximate section marker · Seating plan not drawn to scale</p>
+
+      <div class="legend" aria-label="Ticket category legend">
+        <div class="legend-item"><span class="swatch" style="background:#367f82"></span>No. 1 Obsession Seat Package</div>
+        <div class="legend-item"><span class="swatch" style="background:#d02bd0"></span>No. 1 Obsession Package</div>
+        <div class="legend-item"><span class="swatch" style="background:#a923b0"></span>SVIP Standing</div>
+        <div class="legend-item"><span class="swatch" style="background:#28bfd3"></span>VIP A Premium</div>
+        <div class="legend-item"><span class="swatch" style="background:#f52e68"></span>VIP A Regular</div>
+        <div class="legend-item"><span class="swatch" style="background:#7136c9"></span>VIP B Premium</div>
+        <div class="legend-item"><span class="swatch" style="background:#b51b0b"></span>VIP B Regular</div>
+        <div class="legend-item"><span class="swatch" style="background:#48d83d"></span>Box A Premium</div>
+        <div class="legend-item"><span class="swatch" style="background:#f47743"></span>Box B Premium</div>
+        <div class="legend-item"><span class="swatch" style="background:#e6f34b"></span>Box Regular</div>
+      </div>
+    </div>
+
+    <div class="map-card">
+      <label for="sectionSelect" class="field-label">WHERE ARE YOU SEATED?</label>
+      <select id="sectionSelect" class="map-select">
+        <option value="">Select your section</option>
+      </select>
+
+      <label id="rowLabel" for="rowSelect" class="field-label" style="display:none;margin-top:22px;">WHAT IS YOUR ROW?</label>
+      <select id="rowSelect" class="map-select" style="display:none;" disabled>
+        <option value="">Select your row</option>
+      </select>
+
+      <div id="locationResult" class="location-result">
+        <p style="color:#00d9ff;font-size:10px;letter-spacing:2px;">📍 YOUR SELECTED SEAT</p>
+        <h2 id="selectedSection" style="font-size:25px;margin-top:8px;color:#fff;"></h2>
+        <p id="selectedCategory" style="color:#fff;font-size:14px;margin-top:8px;font-weight:bold;"></p>
+        <p id="selectedRowsNote" class="hint"></p>
+      </div>
+
+      <p class="hint">Choose your row for Sections 203, 204, 205, 207, 216, 218, 219 and 220. Other sections have one ticket category and do not require a row selection.</p>
+    </div>
+
+    <div class="map-card">
+      <label for="destinationSelect" class="field-label" style="color:#ff68bd;">WHERE DO YOU WANT TO GO?</label>
+      <select id="destinationSelect" class="map-select" style="border-color:#ff68bd;">
+        <option value="">Choose your destination</option>
+        <option value="Restroom">🚻 Restroom</option>
+        <option value="Entrance">🚪 Entrance</option>
+        <option value="Exit">🚶 Exit</option>
+        <option value="Elevator">🛗 Elevator</option>
+      </select>
+
+      <div id="destinationResult" class="destination-result">
+        <p style="color:#ff68bd;font-size:10px;letter-spacing:2px;">DESTINATION SELECTED</p>
+        <h3 id="selectedDestination" style="color:#fff;margin-top:8px;"></h3>
+        <p style="color:#c9c5df;font-size:12px;margin-top:6px;line-height:1.6;">Route information will be added after venue locations are verified.</p>
+      </div>
+    </div>
+
+    <a href="https://www.sm-arena.com/MOA/" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;text-decoration:none;color:#080810;background:#00d9ff;font-weight:bold;padding:15px;border-radius:12px;margin-top:20px;font-size:13px;letter-spacing:1px;">🌐 EXPLORE THE ARENA IN 360°</a>
+  </section>
+
+  <section id="essentials" class="content-section">
+    <h2 class="section-title">🎟️ CONCERT ESSENTIALS</h2>
+    <p>Your pre-concert checklist, entry reminders, and things to prepare before concert day.</p>
+    <p class="coming">Guide coming soon!</p>
+  </section>
+
+  <section id="facilities" class="content-section">
+    <h2 class="section-title">🚻 ARENA FACILITIES</h2>
+    <p>Information about restrooms, elevators, exits, and other useful facilities.</p>
+    <p class="coming">Guide coming soon!</p>
+  </section>
+
+  <section id="emergency" class="content-section">
+    <h2 class="section-title">🆘 EMERGENCY INFORMATION</h2>
+    <p>Important emergency contacts, safety reminders, and assistance information.</p>
+    <p class="coming">Information coming soon!</p>
+  </section>
+
+  <div class="footer">Made with <span>♥</span> by Trixie<br>Unofficial fan-made guide · Not affiliated with 5SOS or SM MOA Arena</div>
+</main>
+
+<script>
+  // Approximate marker centers for each section/category on the seating-plan image.
+  // Split 200-level sections have row-specific positions.
+
+  const sectionData = {
+    "201": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[65.0,68.5]},
+    "202": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[56.5,74.5]},
+
+    "203": {level:200, split:true, pos:{
+      pink:[48.8,76.0],
+      red:[48.8,80.0]
+    }},
+    "204": {level:200, split:true, pos:{
+      pink:[41.0,73.0],
+      red:[40.0,77.0]
+    }},
+    "205": {level:200, split:true, pos:{
+      pink:[34.5,67.0],
+      red:[32.5,72.0]
+    }},
+
+    "206": {level:200, category:"VIP A Premium", color:"#28bfd3", pos:[27.0,62.0]},
+
+    "207": {level:200, split:true, pos:{
+      teal:[18.5,52.0],
+      cyan:[24.0,57.0],
+      purple:[18.0,59.0]
+    }},
+
+    "216": {level:200, split:true, pos:{
+      teal:[44.5,21.0],
+      cyan:[50.0,27.0],
+      purple:[49.0,17.0]
+    }},
+
+    "217": {level:200, category:"VIP A Premium", color:"#28bfd3", pos:[56.0,30.0]},
+
+    "218": {level:200, split:true, pos:{
+      pink:[63.0,38.0],
+      red:[67.5,33.5]
+    }},
+    "219": {level:200, split:true, pos:{
+      pink:[69.5,43.0],
+      red:[73.0,39.0]
+    }},
+    "220": {level:200, split:true, pos:{
+      pink:[73.0,47.0],
+      red:[76.5,47.0]
+    }},
+
+    "221": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[75.0,58.0]},
+    "222": {level:200, category:"VIP A Regular", color:"#f52e68", pos:[68.0,63.0]},
+
+    "401": {level:400, category:"Box B Premium", color:"#f47743", pos:[68.5,75.0]},
+    "402": {level:400, category:"Box B Premium", color:"#f47743", pos:[61.5,81.0]},
+    "403A": {level:400, category:"Box B Premium", color:"#f47743", pos:[54.0,86.5]},
+    "403B": {level:400, category:"Box B Premium", color:"#f47743", pos:[44.5,87.5]},
+    "404": {level:400, category:"Box B Premium", color:"#f47743", pos:[36.5,82.5]},
+    "405": {level:400, category:"Box B Premium", color:"#f47743", pos:[28.5,76.0]},
+    "406": {level:400, category:"Box A Premium", color:"#48d83d", pos:[20.0,68.0]},
+    "407": {level:400, category:"Box A Premium", color:"#48d83d", pos:[11.0,62.0]},
+    "416": {level:400, category:"Box A Premium", color:"#48d83d", pos:[54.0,12.0]},
+    "417": {level:400, category:"Box A Premium", color:"#48d83d", pos:[63.5,20.0]},
+    "418": {level:400, category:"Box B Premium", color:"#f47743", pos:[71.5,27.0]},
+    "419": {level:400, category:"Box B Premium", color:"#f47743", pos:[79.0,34.0]},
+    "420A": {level:400, category:"Box B Premium", color:"#f47743", pos:[85.0,42.0]},
+    "420B": {level:400, category:"Box B Premium", color:"#f47743", pos:[85.5,52.0]},
+    "421": {level:400, category:"Box B Premium", color:"#f47743", pos:[82.0,61.0]},
+    "422": {level:400, category:"Box B Premium", color:"#f47743", pos:[75.0,68.5]},
+
+    "501": {level:500, category:"Box Regular", color:"#e6f34b", pos:[73.0,78.0]},
+    "502": {level:500, category:"Box Regular", color:"#e6f34b", pos:[65.5,86.0]},
+    "503A": {level:500, category:"Box Regular", color:"#e6f34b", pos:[55.5,94.0]},
+    "503B": {level:500, category:"Box Regular", color:"#e6f34b", pos:[43.5,94.0]},
+    "504": {level:500, category:"Box Regular", color:"#e6f34b", pos:[32.5,89.0]},
+    "505": {level:500, category:"Box Regular", color:"#e6f34b", pos:[23.0,82.0]},
+    "506": {level:500, category:"Box Regular", color:"#e6f34b", pos:[16.5,74.0]},
+    "507": {level:500, category:"Box Regular", color:"#e6f34b", pos:[7.5,67.0]},
+    "516": {level:500, category:"Box Regular", color:"#e6f34b", pos:[58.0,6.5]},
+    "517": {level:500, category:"Box Regular", color:"#e6f34b", pos:[67.5,14.5]},
+    "518": {level:500, category:"Box Regular", color:"#e6f34b", pos:[76.0,22.0]},
+    "519": {level:500, category:"Box Regular", color:"#e6f34b", pos:[85.0,31.0]},
+    "520A": {level:500, category:"Box Regular", color:"#e6f34b", pos:[92.0,42.0]},
+    "520B": {level:500, category:"Box Regular", color:"#e6f34b", pos:[92.5,52.0]},
+    "521": {level:500, category:"Box Regular", color:"#e6f34b", pos:[89.0,64.0]},
+    "522": {level:500, category:"Box Regular", color:"#e6f34b", pos:[81.0,72.0]}
+  };
+
+  const categoryInfo = {
+    teal:{name:"No. 1 Obsession Seat Package",color:"#367f82"},
+    cyan:{name:"VIP A Premium",color:"#28bfd3"},
+    pink:{name:"VIP A Regular",color:"#f52e68"},
+    purple:{name:"VIP B Premium",color:"#7136c9"},
+    red:{name:"VIP B Regular",color:"#b51b0b"}
+  };
+
+  const sectionSelect=document.getElementById("sectionSelect");
+  const rowSelect=document.getElementById("rowSelect");
+  const rowLabel=document.getElementById("rowLabel");
+  const mapMarker=document.getElementById("mapMarker");
+  const locationResult=document.getElementById("locationResult");
+  const selectedSection=document.getElementById("selectedSection");
+  const selectedCategory=document.getElementById("selectedCategory");
+  const selectedRowsNote=document.getElementById("selectedRowsNote");
+  const rowLetters="ABCDEFGHIJKLMNOP".split("");
+
+  // Populate the section dropdown.
+  Object.keys(sectionData).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).forEach(section=>{
+    const option=document.createElement("option");
+    option.value=section;
+    option.textContent="Section "+section;
+    sectionSelect.appendChild(option);
+  });
+
+  // Only sections with multiple colored zones require row selection.
+  function updateRowOptions(){
+    const section=sectionSelect.value;
+
+    rowSelect.innerHTML='<option value="">Select your row</option>';
+    rowSelect.value="";
+
+    const needsRow=!!section && sectionData[section].split===true;
+
+    rowLabel.style.display=needsRow?"block":"none";
+    rowSelect.style.display=needsRow?"block":"none";
+    rowSelect.disabled=!needsRow;
+
+    if(needsRow){
+      rowLetters.forEach(row=>{
+        const option=document.createElement("option");
+        option.value=row;
+        option.textContent="Row "+row;
+        rowSelect.appendChild(option);
+      });
+    }
+  }
+
+  function getSeatCategory(section,row){
+    const d=sectionData[section];
+
+    // Sections with only one ticket category.
+    if(!d.split){
+      return {
+        name:d.category,
+        color:d.color,
+        pos:d.pos,
+        note:"This section has one ticket category across all rows."
+      };
+    }
+
+    let key,note;
+
+    // Sections 203, 204, 205, 218, 219 and 220:
+    // Rows A-G = VIP A Regular (pink)
+    // Rows H-P = VIP B Regular (dark red)
+    if(["203","204","205","218","219","220"].includes(section)){
+      if("ABCDEFG".includes(row)){
+        key="pink";
+        note="Rows A to G · VIP A Regular";
+      } else {
+        key="red";
+        note="Rows H to P · VIP B Regular";
+      }
+    }
+
+    // Sections 207 and 216:
+    // Rows A-C = No. 1 Obsession Seat Package (teal)
+    // Rows D-H = VIP A Premium (cyan)
+    // Rows I-P = VIP B Premium (purple)
+    else if(section==="207"||section==="216"){
+      if("ABC".includes(row)){
+        key="teal";
+        note="Rows A to C · No. 1 Obsession Seat Package";
+      } else if("DEFGH".includes(row)){
+        key="cyan";
+        note="Rows D to H · VIP A Premium";
+      } else {
+        key="purple";
+        note="Rows I to P · VIP B Premium";
+      }
+    }
+
+    return {
+      name:categoryInfo[key].name,
+      color:categoryInfo[key].color,
+      pos:d.pos[key],
+      note
+    };
+  }
+
+  function updateMarker(){
+    const section=sectionSelect.value;
+    const d=section?sectionData[section]:null;
+    const row=d&&d.split?rowSelect.value:"ALL";
+
+    if(!section||(d.split&&!row)){
+      mapMarker.style.display="none";
+      locationResult.style.display="none";
+      return;
+    }
+
+    const result=getSeatCategory(section,row);
+
+    // The pin's bottom tip is anchored to the selected map coordinate.
+    mapMarker.style.left=result.pos[0]+"%";
+    mapMarker.style.top=result.pos[1]+"%";
+    mapMarker.style.display="block";
+
+    mapMarker.querySelector("svg path").setAttribute("fill",result.color);
+
+    selectedSection.textContent="SECTION "+section+(row==="ALL"?"":" · ROW "+row);
+    selectedCategory.textContent=result.name;
+    selectedCategory.style.color=result.color;
+    selectedRowsNote.textContent=result.note;
+
+    locationResult.style.display="block";
+  }
+
+  sectionSelect.addEventListener("change",()=>{
+    updateRowOptions();
+    updateMarker();
+  });
+
+  rowSelect.addEventListener("change",updateMarker);
+
+  // Destination dropdown.
+  const destinationSelect=document.getElementById("destinationSelect");
+  const destinationResult=document.getElementById("destinationResult");
+  const selectedDestination=document.getElementById("selectedDestination");
+
+  destinationSelect.addEventListener("change",function(){
+    if(this.value){
+      selectedDestination.textContent=this.options[this.selectedIndex].text;
+      destinationResult.style.display="block";
+    } else {
+      destinationResult.style.display="none";
+    }
+  });
+</script>
+</body>
+</html>
