@@ -204,7 +204,7 @@
       border: 1px solid #ff68bd;
     }
 
-    /* INTERACTIVE MAP */
+    /* SEATING MAP */
 
     .seating-map {
       position: relative;
@@ -218,15 +218,15 @@
       border-radius: 8px;
     }
 
-    /* MAP BUBBLE */
+    /* MAP MARKER */
 
     .map-marker {
       display: none;
       position: absolute;
-      z-index: 10;
+      z-index: 20;
       transform: translate(-50%, -100%);
       pointer-events: none;
-      transition: left 0.35s ease, top 0.35s ease;
+      transition: left 0.3s ease, top 0.3s ease;
     }
 
     .marker-bubble {
@@ -234,8 +234,8 @@
       background: #00d9ff;
       color: #080810;
       border: 2px solid white;
-      border-radius: 18px;
-      padding: 9px 13px;
+      border-radius: 16px;
+      padding: 9px 12px;
       min-width: 125px;
       text-align: center;
       box-shadow: 0 0 18px #00d9ff99;
@@ -354,7 +354,7 @@
       Select your seat details to locate your approximate section.
     </p>
 
-    <!-- SEATING PLAN WITH MARKER -->
+    <!-- SEATING PLAN -->
     <div class="map-card" style="padding:12px;">
 
       <div class="seating-map" id="seatingMap">
@@ -402,9 +402,7 @@
         </label>
 
         <select id="sectionSelect" class="map-select">
-
           <option value="">Select your section</option>
-
         </select>
 
       </div>
@@ -425,7 +423,7 @@
 
       </div>
 
-      <div style="margin-bottom:5px;">
+      <div>
 
         <label class="field-label" for="seatInput">
           SEAT NUMBER(S)
@@ -456,7 +454,7 @@
         </p>
 
         <p style="color:#ff68bd; font-size:11px; margin-top:10px;">
-          Approximate section marker only
+          Approximate section location only
         </p>
 
       </div>
@@ -594,7 +592,8 @@
 
 
   // APPROXIMATE SECTION POSITIONS
-  // Percentages refer to the uploaded seating-plan image.
+  // Percentages are relative to the full seating-plan image.
+  // These are visual estimates, not exact seat coordinates.
 
   const sectionPositions = {
 
@@ -666,7 +665,7 @@
   const markerDetails = document.getElementById("markerDetails");
 
 
-  // UPDATE MAP MARKER AND TICKET DETAILS
+  // UPDATE MAP WHEN SELECTION CHANGES
 
   function updateMap() {
 
@@ -711,7 +710,7 @@
   }
 
 
-  // LISTEN FOR USER INPUT
+  // LISTEN FOR SECTION, ROW AND SEAT CHANGES
 
   sectionSelect.addEventListener("change", updateMap);
   rowInput.addEventListener("input", updateMap);
